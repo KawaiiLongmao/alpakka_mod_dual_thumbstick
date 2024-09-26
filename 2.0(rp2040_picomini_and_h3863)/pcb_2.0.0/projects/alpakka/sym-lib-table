@@ -1,0 +1,5 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "ILO_sym")(type "KiCad")(uri "${KIPRJMOD}/../../lib/symbol lib/ILO_sym.kicad_sym")(options "")(descr ""))
+  (lib (name "Longmao_sym")(type "KiCad")(uri "${KIPRJMOD}/../../lib/symbol lib/Longmao_sym.kicad_sym")(options "")(descr ""))
+)
