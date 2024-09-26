@@ -1,0 +1,5 @@
+build/
+deps*/
+.vscode
+**/.DS_Store
+# src/headers/version.h
