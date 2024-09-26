@@ -1,0 +1,177 @@
+diff --git a/src/headers/config.h b/src/headers/config.h
+index 3e785c6..a9ef028 100644
+--- a/src/headers/config.h
++++ b/src/headers/config.h
+@@ -49,6 +49,7 @@
+ #define CFG_THUMBSTICK_SATURATION 1.6
+ #define CFG_THUMBSTICK_INNER_RADIUS 0.75
+ #define CFG_THUMBSTICK_ADDITIONAL_DEADZONE_FOR_BUTTONS 0.05
++#define CFG_RIGHT_THUMBSTICK_ADDITIONAL_DEADZONE_FOR_BUTTONS 0.60
+ 
+ #define CFG_DHAT_DEBOUNCE_TIME 100  // Milliseconds.
+ 
+diff --git a/src/headers/right_thumbstick.h b/src/headers/right_thumbstick.h
+index 3e7271e..b98177a 100644
+--- a/src/headers/right_thumbstick.h
++++ b/src/headers/right_thumbstick.h
+@@ -3,19 +3,30 @@
+ 
+ #pragma once
+ 
++typedef enum RThumbstickMode_enum {
++    RIGHT_THUMBSTICK_MODE_OFF,
++    RIGHT_THUMBSTICK_MODE_4DIR,
++    RIGHT_THUMBSTICK_MODE_8DIR,
++} RThumbstickMode;
++
+ typedef struct RThumbstick_struct RThumbstick;
+ 
+ struct RThumbstick_struct {
+     void (*report) (RThumbstick *self);
+     void (*reset) (RThumbstick *self);
+-    // Real buttons.
++
+     Button left;
+     Button right;
+     Button up;
+     Button down;
+     Button push;
+ 
+-    ThumbstickMode mode;
++    Button up_left;
++    Button up_right;
++    Button down_left;
++    Button down_right;
++
++    RThumbstickMode mode;
+     ThumbstickDistance distance_mode;
+     bool deadzone_override;
+     float deadzone;
+@@ -29,6 +40,10 @@ RThumbstick RThumbstick_ (
+     Button up,
+     Button down,
+     Button push,
++    Button up_left,
++    Button up_right,
++    Button down_left,
++    Button down_right,
+     bool deadzone_override,
+     float deadzone,
+     float antideadzone,
+diff --git a/src/profile.c b/src/profile.c
+index 04fba6a..bb0392b 100644
+--- a/src/profile.c
++++ b/src/profile.c
+@@ -184,6 +184,12 @@ void Profile__load_from_config(Profile *self, CtrlProfile *profile) {
+         Button_from_ctrl(PIN_VIRTUAL, profile->sections[SECTION_DHAT_UP]),
+         Button_from_ctrl(PIN_VIRTUAL, profile->sections[SECTION_DHAT_DOWN]),
+         Button_from_ctrl(PIN_R3, profile->sections[SECTION_DHAT_PUSH]),
++
++        Button_from_ctrl(PIN_VIRTUAL, profile->sections[SECTION_DHAT_UL]),
++        Button_from_ctrl(PIN_VIRTUAL, profile->sections[SECTION_DHAT_UR]),
++        Button_from_ctrl(PIN_VIRTUAL, profile->sections[SECTION_DHAT_DL]),
++        Button_from_ctrl(PIN_VIRTUAL, profile->sections[SECTION_DHAT_DR]),
++
+         ctrl_thumbtick.deadzone_override,
+         ctrl_thumbtick.deadzone / 100.0,
+         ctrl_thumbtick.antideadzone / 100.0,
+diff --git a/src/right_thumbstick.c b/src/right_thumbstick.c
+index 88b154e..ab0e276 100644
+--- a/src/right_thumbstick.c
++++ b/src/right_thumbstick.c
+@@ -140,12 +140,29 @@ void RThumbstick__report_axial(
+     ThumbstickPosition pos
+ ) {
+     // Evaluate virtual buttons.
+-    if (pos.radius > CFG_THUMBSTICK_ADDITIONAL_DEADZONE_FOR_BUTTONS) {
+-        uint8_t direction = right_thumbstick_get_direction(pos.angle, self->overlap);
+-        if (direction & DIR4_MASK_LEFT)  self->left.virtual_press = true;
+-        if (direction & DIR4_MASK_RIGHT) self->right.virtual_press = true;
+-        if (direction & DIR4_MASK_UP)    self->up.virtual_press = true;
+-        if (direction & DIR4_MASK_DOWN)  self->down.virtual_press = true;
++    if (pos.radius > CFG_RIGHT_THUMBSTICK_ADDITIONAL_DEADZONE_FOR_BUTTONS) {
++
++        if (self->mode == RIGHT_THUMBSTICK_MODE_4DIR)
++        {
++            uint8_t direction = right_thumbstick_get_direction(pos.angle, self->overlap);
++            if (direction & DIR4_MASK_LEFT)  self->left.virtual_press = true;
++            if (direction & DIR4_MASK_RIGHT) self->right.virtual_press = true;
++            if (direction & DIR4_MASK_UP)    self->up.virtual_press = true;
++            if (direction & DIR4_MASK_DOWN)  self->down.virtual_press = true;
++
++        }
++        else if (self->mode == RIGHT_THUMBSTICK_MODE_8DIR)
++        {
++            static float CUT8 = 22.5;
++            if      (is_between(pos.angle, -CUT8*1,  CUT8*1)) self->up.virtual_press = true;
++            else if (is_between(pos.angle,  CUT8*1,  CUT8*3)) self->up_right.virtual_press = true;
++            else if (is_between(pos.angle,  CUT8*3,  CUT8*5)) self->right.virtual_press = true;
++            else if (is_between(pos.angle,  CUT8*5,  CUT8*7)) self->down_right.virtual_press = true;
++            else if (is_between(pos.angle, -CUT8*7, -CUT8*5)) self->down_left.virtual_press = true;
++            else if (is_between(pos.angle, -CUT8*5, -CUT8*3)) self->left.virtual_press = true;
++            else if (is_between(pos.angle, -CUT8*3, -CUT8*1)) self->up_left.virtual_press = true;
++            else if (fabs(pos.angle) >= CUT8*7)               self->down.virtual_press = true;
++        }
+     }
+     // Report directional virtual buttons or axis.
+     //// Left.
+@@ -162,6 +179,11 @@ void RThumbstick__report_axial(
+     else right_thumbstick_report_axis(self->down.actions[0], constrain(pos.y, 0, 1));
+     // Report push.
+     self->push.report(&self->push);
++
++    if (!hid_is_axis(self->up_left.actions[0])) self->up_left.report(&self->up_left);
++    if (!hid_is_axis(self->up_right.actions[0])) self->up_right.report(&self->up_right);
++    if (!hid_is_axis(self->down_left.actions[0])) self->down_left.report(&self->down_left);
++    if (!hid_is_axis(self->down_right.actions[0])) self->down_right.report(&self->down_right);
+ }
+ 
+ void RThumbstick__report(RThumbstick *self) {
+@@ -190,13 +212,15 @@ void RThumbstick__report(RThumbstick *self) {
+ }
+ 
+ void RThumbstick__reset(RThumbstick *self) {
+-    if (self->mode == THUMBSTICK_MODE_4DIR) {
+-        self->left.reset(&self->left);
+-        self->right.reset(&self->right);
+-        self->up.reset(&self->up);
+-        self->down.reset(&self->down);
+-        self->push.reset(&self->push);
+-    }
++    self->left.reset(&self->left);
++    self->right.reset(&self->right);
++    self->up.reset(&self->up);
++    self->down.reset(&self->down);
++    self->push.reset(&self->push);
++    self->up_left.reset(&self->up_left);
++    self->up_right.reset(&self->up_right);
++    self->down_left.reset(&self->down_left);
++    self->down_right.reset(&self->down_right);
+ }
+ 
+ RThumbstick RThumbstick_ (
+@@ -205,6 +229,10 @@ RThumbstick RThumbstick_ (
+     Button up,
+     Button down,
+     Button push,
++    Button up_left,
++    Button up_right,
++    Button down_left,
++    Button down_right,
+     bool deadzone_override,
+     float deadzone,
+     float antideadzone,
+@@ -218,6 +246,13 @@ RThumbstick RThumbstick_ (
+     rThumbstick.up =    up;
+     rThumbstick.down =  down;
+     rThumbstick.push =  push;
++    rThumbstick.up_left =  up_left;
++    rThumbstick.up_right = up_right;
++    rThumbstick.down_left =  down_left;
++    rThumbstick.down_right = down_right;
++
++    rThumbstick.mode = RIGHT_THUMBSTICK_MODE_8DIR;
++
+     rThumbstick.deadzone_override = deadzone_override;
+     rThumbstick.deadzone = deadzone;
+     rThumbstick.antideadzone = antideadzone;
