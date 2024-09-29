@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include <stdlib.h>
 #include "button.h"
 #include "config.h"
 #include "gyro.h"
@@ -176,14 +177,78 @@ void Gyro__report_absolute(Gyro *self)
         return;
     }
     // Output calculation.
-    float x = degrees(asin(-world_right.z)) / 90;
-    float y = degrees(asin(-world_top.z)) / 90;
-    float z = degrees(asin(world_fw.z)) / 90;
-    if (fabs(x) > 0.5 && z < 0)
-        x += -z * 2 * sign(x);                                         // Steering lock.
-    x = constrain(x * 1.1, -1, 1);                                     // Additional saturation.
-    x = ramp(x, self->absolute_x_min / 90, self->absolute_x_max / 90); // Adjust range.
-    y = ramp(y, self->absolute_y_min / 90, self->absolute_y_max / 90); // Adjust range.
+    float x1 = degrees(asin(-world_right.z));
+    float y = degrees(asin(-world_top.z));
+    float z = degrees(asin(world_fw.z));
+    float min = fabs(y) / 90 - 1;
+    float max = 1 - fabs(y) / 90;
+    x1 = constrain(2 * ((x1 / 90 - min) / (max - min)) - 1, -1, 1) * 90;
+    if (z < 0)
+    {
+        if (x1 > 0)
+            x1 = 180 - x1;
+        else if (x1 < 0)
+            x1 = -180 - x1;
+        else
+            x1 = 180;
+    }
+    static int x2i = 0;
+    static float x2f = 0;
+    if (x2i != 0)
+    {
+        if (fabs(x2f) > 170)
+        {
+            if (x2f > 0 && x1 < 0)
+                x2i += 1;
+            else if (x2f < 0 && x1 > 0)
+                x2i -= 1;
+        }
+        else if (fabs(x2f) < 10)
+        {
+            if (x2f > 0 && x1 < 0)
+                x2i -= 1;
+            else if (x2f < 0 && x1 > 0)
+                x2i += 1;
+        }
+    }
+    else if (fabs(x2f) > 170)
+    {
+        if (x2f > 0 && x1 < 0)
+            x2i += 1;
+        else if (x2f < 0 && x1 > 0)
+            x2i -= 1;
+    }
+    x2f = x1;
+    int a = abs(x2i);
+    if (a > 4 && (a - 4) % 2 == 0)
+        x2i = 4 * sign(x2i);
+    float x = 0;
+    if (x2i > 0)
+    {
+        if (x1 > 0)
+            x = (x2i * 180 + x1) / 540;
+        else if (x1 < 0)
+            x = (x2i * 180 + x1 + 180) / 540;
+        else
+            x = (x2i * 180) / 540;
+    }
+    else if (x2i < 0)
+    {
+        if (x1 < 0)
+            x = (x2i * 180 + x1) / 540;
+        else if (x1 > 0)
+            x = (x2i * 180 + x1 - 180) / 540;
+        else
+            x = (x2i * 180) / 540;
+    }
+    else
+        x = x1 / 540;
+    y /= 90;
+    z /= 90;
+    // if (fabs(x) > 0.5 && z < 0) x += -z * 2 * sign(x); // Steering lock.
+    // x = constrain(x * 1.1, -1, 1); // Additional saturation.
+    x = ramp(x, self->absolute_x_min * 6 / 540, self->absolute_x_max * 6 / 540); // Adjust range.
+    y = ramp(y, self->absolute_y_min / 90, self->absolute_y_max / 90);           // Adjust range.
     // Output mapping.
     if (x >= 0)
         gyro_absolute_output(x, self->actions_x_pos, &(self->pressed_x_pos));
@@ -193,6 +258,10 @@ void Gyro__report_absolute(Gyro *self)
         gyro_absolute_output(y, self->actions_y_pos, &(self->pressed_y_pos));
     else
         gyro_absolute_output(-y, self->actions_y_neg, &(self->pressed_y_neg));
+    if (z >= 0)
+        gyro_absolute_output(z, self->actions_z_pos, &(self->pressed_z_pos));
+    else
+        gyro_absolute_output(-z, self->actions_z_neg, &(self->pressed_z_neg));
     // printf("\r%6.1f %6.1f %6.1f", x*100, y*100, z*100);
 }
 
@@ -264,10 +333,10 @@ bool Gyro__is_engaged(Gyro *self)
 
 void Gyro__report(Gyro *self)
 {
-    if (config_current_protocol_exist_gyro())
-    {
-        report_gyro_and_accel(self);
-    }
+    // if (config_current_protocol_exist_gyro())
+    // {
+    //     report_gyro_and_accel(self);
+    // }
     if (self->mode == GYRO_MODE_TOUCH_ON)
     {
         if (self->is_engaged(self))

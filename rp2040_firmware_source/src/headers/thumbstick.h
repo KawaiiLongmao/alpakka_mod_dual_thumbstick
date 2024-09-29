@@ -6,6 +6,15 @@
 #include "button.h"
 #include "glyph.h"
 
+#define DIR4_MASK_LEFT 1 << 0
+#define DIR4_MASK_RIGHT 1 << 1
+#define DIR4_MASK_UP 1 << 2
+#define DIR4_MASK_DOWN 1 << 3
+#define DIR8_MASK_UP_LEFT 1 << 4
+#define DIR8_MASK_UP_RIGHT 1 << 5
+#define DIR8_MASK_DOWN_LEFT 1 << 6
+#define DIR8_MASK_DOWN_RIGHT 1 << 7
+
 typedef enum ThumbstickMode_enum
 {
     THUMBSTICK_MODE_OFF,
@@ -27,13 +36,13 @@ typedef struct ThumbstickPosition_struct
     float radius;
 } ThumbstickPosition;
 
-typedef enum Dir4Mask_enum
-{
-    DIR4_MASK_LEFT = 1,
-    DIR4_MASK_RIGHT = 2,
-    DIR4_MASK_UP = 4,
-    DIR4_MASK_DOWN = 8,
-} Dir4Mask;
+// typedef enum Dir4Mask_enum
+// {
+//     DIR4_MASK_LEFT = 1,
+//     DIR4_MASK_RIGHT = 2,
+//     DIR4_MASK_UP = 4,
+//     DIR4_MASK_DOWN = 8,
+// } Dir4Mask;
 
 typedef enum Dir4_enum
 {

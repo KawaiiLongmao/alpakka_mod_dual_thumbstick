@@ -15,6 +15,10 @@ struct RThumbstick_struct
     Button up;
     Button down;
     Button push;
+    Button up_left;
+    Button up_right;
+    Button down_left;
+    Button down_right;
 
     ThumbstickMode mode;
     ThumbstickDistance distance_mode;
@@ -30,6 +34,10 @@ RThumbstick RThumbstick_(
     Button up,
     Button down,
     Button push,
+    Button up_left,
+    Button up_right,
+    Button down_left,
+    Button down_right,
     bool deadzone_override,
     float deadzone,
     float antideadzone,

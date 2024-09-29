@@ -19,8 +19,11 @@
 #include "logging.h"
 #include "webusb.h"
 
-const uint8_t rts_x_adc_channel = PIN_RIGHT_THUMBSTICK_X - 26;
-const uint8_t rts_y_adc_channel = PIN_RIGHT_THUMBSTICK_Y - 26;
+const uint8_t rts_x_adc_channel = 3;
+const uint8_t rts_y_adc_channel = 2;
+
+const float CUT4 = 45;
+const float CUT8 = 22.5;
 
 float rts_offset_x = 0;
 float rts_offset_y = 0;
@@ -142,9 +145,33 @@ void right_thumbstick_report_axis(uint8_t axis, float value)
         hid_gamepad_rz(value);
 }
 
-uint8_t right_thumbstick_get_direction(float angle, float overlap)
+uint8_t right_thumbstick_get_direction(RThumbstick *self, float angle)
 {
-    float a = 45 * (1 - overlap);
+    // UP_RIGHT
+    if (is_between(angle, CUT8 * 1, CUT8 * 3))
+    {
+        if (self->up_right.actions[0] != 0)
+            return DIR8_MASK_UP_RIGHT;
+    }
+    // DOWN_RIGHT
+    else if (is_between(angle, CUT8 * 5, CUT8 * 7))
+    {
+        if (self->down_right.actions[0] != 0)
+            return DIR8_MASK_DOWN_RIGHT;
+    }
+    // DOWN_LEFT
+    else if (is_between(angle, -CUT8 * 7, -CUT8 * 5))
+    {
+        if (self->down_left.actions[0] != 0)
+            return DIR8_MASK_DOWN_LEFT;
+    }
+    // UP_LEFT
+    else if (is_between(angle, -CUT8 * 3, -CUT8 * 1))
+    {
+        if (self->up_left.actions[0] != 0)
+            return DIR8_MASK_UP_LEFT;
+    }
+    float a = CUT4 * (1 - self->overlap);
     float b = 180 - a;
     uint8_t mask = 0;
     if (is_between(angle, -b, -a))
@@ -165,7 +192,7 @@ void RThumbstick__report_axial(
     // Evaluate virtual buttons.
     if (pos.radius > CFG_THUMBSTICK_ADDITIONAL_DEADZONE_FOR_BUTTONS)
     {
-        uint8_t direction = right_thumbstick_get_direction(pos.angle, self->overlap);
+        uint8_t direction = right_thumbstick_get_direction(self, pos.angle);
         if (direction & DIR4_MASK_LEFT)
             self->left.virtual_press = true;
         if (direction & DIR4_MASK_RIGHT)
@@ -174,8 +201,25 @@ void RThumbstick__report_axial(
             self->up.virtual_press = true;
         if (direction & DIR4_MASK_DOWN)
             self->down.virtual_press = true;
+        if (direction & DIR8_MASK_UP_LEFT)
+            self->up_left.virtual_press = true;
+        if (direction & DIR8_MASK_UP_RIGHT)
+            self->up_right.virtual_press = true;
+        if (direction & DIR8_MASK_DOWN_LEFT)
+            self->down_left.virtual_press = true;
+        if (direction & DIR8_MASK_DOWN_RIGHT)
+            self->down_right.virtual_press = true;
     }
     // Report directional virtual buttons or axis.
+    //// DIR8_MASK
+    if (!hid_is_axis(self->up_left.actions[0]))
+        self->up_left.report(&self->up_left);
+    if (!hid_is_axis(self->up_right.actions[0]))
+        self->up_right.report(&self->up_right);
+    if (!hid_is_axis(self->down_left.actions[0]))
+        self->down_left.report(&self->down_left);
+    if (!hid_is_axis(self->down_right.actions[0]))
+        self->down_right.report(&self->down_right);
     //// Left.
     if (!hid_is_axis(self->left.actions[0]))
         self->left.report(&self->left);
@@ -248,6 +292,10 @@ RThumbstick RThumbstick_(
     Button up,
     Button down,
     Button push,
+    Button up_left,
+    Button up_right,
+    Button down_left,
+    Button down_right,
     bool deadzone_override,
     float deadzone,
     float antideadzone,
@@ -261,6 +309,10 @@ RThumbstick RThumbstick_(
     rThumbstick.up = up;
     rThumbstick.down = down;
     rThumbstick.push = push;
+    rThumbstick.up_left = up_left;
+    rThumbstick.up_right = up_right;
+    rThumbstick.down_left = down_left;
+    rThumbstick.down_right = down_right;
     rThumbstick.deadzone_override = deadzone_override;
     rThumbstick.deadzone = deadzone;
     rThumbstick.antideadzone = antideadzone;

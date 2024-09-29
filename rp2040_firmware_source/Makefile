@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: GPL-2.0-only
 # Copyright (C) 2022, Input Labs Oy.
 
-default: version
+default: # version
 	mkdir -p build
 	cmake . -B build -DDEVICE=${DEVICE} && cd build && make
 
-rebuild: version
+rebuild: # version
 	cd build && make
 
 version:

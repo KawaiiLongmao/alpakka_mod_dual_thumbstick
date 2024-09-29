@@ -39,9 +39,9 @@ void main_init()
     // LED feedback ASAP after booting.
     led_init();
     // Init stdio and logging.
-#if SINGLE_THUMBSTICK
-    stdio_uart_init();
-#endif
+// #if SINGLE_THUMBSTICK
+//     stdio_uart_init();
+// #endif
     stdio_init_all();
     logging_set_level(LOG_INFO);
     logging_init();

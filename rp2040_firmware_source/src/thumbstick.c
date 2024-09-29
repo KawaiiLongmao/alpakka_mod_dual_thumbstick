@@ -17,6 +17,9 @@
 #include "logging.h"
 #include "webusb.h"
 
+const uint8_t lts_x_adc_channel = 1;
+const uint8_t lts_y_adc_channel = 0;
+
 float offset_x = 0;
 float offset_y = 0;
 float config_deadzone = 0;
@@ -59,8 +62,8 @@ void thumbstick_calibrate()
     {
         if (!(i % CFG_CALIBRATION_BLINK_FREQ))
             led_show_cycle_step();
-        x += thumbstick_adc(1, 0.0);
-        y += thumbstick_adc(0, 0.0);
+        x += thumbstick_adc(lts_x_adc_channel, 0.0);
+        y += thumbstick_adc(lts_y_adc_channel, 0.0);
     }
     x /= CFG_CALIBRATION_SAMPLES_THUMBSTICK;
     y /= CFG_CALIBRATION_SAMPLES_THUMBSTICK;
@@ -73,8 +76,8 @@ void thumbstick_init()
 {
     info("INIT: Thumbstick\n");
     adc_init();
-    adc_gpio_init(PIN_TX);
-    adc_gpio_init(PIN_TY);
+    adc_gpio_init(PIN_LEFT_THUMBSTICK_X);
+    adc_gpio_init(PIN_LEFT_THUMBSTICK_Y);
     thumbstick_update_offsets();
     thumbstick_update_deadzone();
     // Alternative usage of ABXY while doing daisywheel.
@@ -349,8 +352,8 @@ void Thumbstick__report(Thumbstick *self)
     if (offset_x == 0 && offset_y == 0)
         return;
     // Get values from ADC.
-    float x = thumbstick_adc(1, offset_x);
-    float y = thumbstick_adc(0, offset_y);
+    float x = thumbstick_adc(lts_x_adc_channel, offset_x);
+    float y = thumbstick_adc(lts_y_adc_channel, offset_y);
     // Get correct deadzone.
     float deadzone = self->deadzone_override ? self->deadzone : config_deadzone;
     // Calculate trigonometry.
