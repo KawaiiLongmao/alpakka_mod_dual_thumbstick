@@ -60,8 +60,6 @@ void thumbstick_calibrate()
     float y = 0;
     for (uint32_t i = 0; i < CFG_CALIBRATION_SAMPLES_THUMBSTICK; i++)
     {
-        if (!(i % CFG_CALIBRATION_BLINK_FREQ))
-            led_show_cycle_step();
         x += thumbstick_adc(lts_x_adc_channel, 0.0);
         y += thumbstick_adc(lts_y_adc_channel, 0.0);
     }

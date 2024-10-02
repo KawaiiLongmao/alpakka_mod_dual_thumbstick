@@ -1,3 +1,6 @@
+#ifndef XBOX1914_H
+#define XBOX1914_H
+
 #pragma once
 
 #include <stdint.h>
@@ -53,9 +56,7 @@
         0xFF,            /* bInterfaceClass      (Vendor specific) */ \
         0x47,            /* bInterfaceSubClass  */                    \
         0xD0,            /* bInterfaceProtocol */                     \
-        0x00,            /* iInterface */                             \
-        XBOX_1914_ENDPOINT_DESCRIPTOR_0_0_OUT2,                       \
-        XBOX_1914_ENDPOINT_DESCRIPTOR_0_0_IN2
+        0x00             /* iInterface */
 
 /* Endpoint Descriptor: */
 #define XBOX_1914_ENDPOINT_DESCRIPTOR_0_0_OUT2                                                         \
@@ -85,9 +86,7 @@
         0xFF,            /* bInterfaceClass      (Vendor specific) */ \
         0x47,            /* bInterfaceSubClass */                     \
         0xD0,            /* bInterfaceProtocol */                     \
-        0x00,            /* iInterface */                             \
-        XBOX_1914_ENDPOINT_DESCRIPTOR_0_1_OUT2,                       \
-        XBOX_1914_ENDPOINT_DESCRIPTOR_0_1_IN2
+        0x00             /* iInterface */
 
 /* Endpoint Descriptor: */
 #define XBOX_1914_ENDPOINT_DESCRIPTOR_0_1_OUT2                                                         \
@@ -129,9 +128,7 @@
         0xFF,            /* bInterfaceClass      (Vendor specific) */ \
         0x47,            /* bInterfaceSubClass */                     \
         0xD0,            /* bInterfaceProtocol */                     \
-        0x00,            /* iInterface */                             \
-        XBOX_1914_ENDPOINT_DESCRIPTOR_1_1_OUT3,                       \
-        XBOX_1914_ENDPOINT_DESCRIPTOR_1_1_IN3
+        0x00             /* iInterface */
 
 /* Endpoint Descriptor: */
 #define XBOX_1914_ENDPOINT_DESCRIPTOR_1_1_OUT3                                                           \
@@ -173,9 +170,7 @@
         0xFF,            /* bInterfaceClass      (Vendor specific) */ \
         0x47,            /* bInterfaceSubClass */                     \
         0xD0,            /* bInterfaceProtocol */                     \
-        0x00,            /* iInterface */                             \
-        XBOX_1914_ENDPOINT_DESCRIPTOR_2_1_OUT4,                       \
-        XBOX_1914_ENDPOINT_DESCRIPTOR_2_1_IN4
+        0x00             /* iInterface */
 
 /* Endpoint Descriptor: */
 #define XBOX_1914_ENDPOINT_DESCRIPTOR_2_1_OUT4                                                    \
@@ -402,13 +397,15 @@ typedef struct
 {
     uint8_t reportId; // Report ID = 0x03 (3)
     // Collection: CA:GamePad CL:SetEffectReport
-    uint8_t PID_GamePadSetEffectReportDcEnableActuators : 4; // Usage 0x000F0097: DC Enable Actuators, Value = 0 to 1
-    uint8_t : 4;                                             // Pad
-    uint8_t lTMagnitude;                                     // Usage 0x000F0070: Magnitude, Value = 0 to 100
-    uint8_t rTMagnitude;                                     // Usage 0x000F0070: Magnitude, Value = 0 to 100
-    uint8_t strongMagnitude;                                 // Usage 0x000F0070: Magnitude, Value = 0 to 100
-    uint8_t weakMagnitude;                                   // Usage 0x000F0070: Magnitude, Value = 0 to 100
-    uint8_t PID_GamePadSetEffectReportDuration;              // Usage 0x000F0050: Duration, Value = 0 to 255, Physical = Value in 10⁻² s units
-    uint8_t PID_GamePadSetEffectReportStartDelay;            // Usage 0x000F00A7: Start Delay, Value = 0 to 255, Physical = Value in 10⁻² s units
-    uint8_t PID_GamePadSetEffectReportLoopCount;             // Usage 0x000F007C: Loop Count, Value = 0 to 255
+    uint8_t DcEnableActuators : 4; // Usage 0x000F0097: DC Enable Actuators, Value = 0 to 1
+    uint8_t : 4;                   // Pad
+    uint8_t lTMagnitude;           // Usage 0x000F0070: Magnitude, Value = 0 to 100
+    uint8_t rTMagnitude;           // Usage 0x000F0070: Magnitude, Value = 0 to 100
+    uint8_t strongMagnitude;       // Usage 0x000F0070: Magnitude, Value = 0 to 100
+    uint8_t weakMagnitude;         // Usage 0x000F0070: Magnitude, Value = 0 to 100
+    uint8_t Duration;              // Usage 0x000F0050: Duration, Value = 0 to 255, Physical = Value in 10⁻² s units
+    uint8_t StartDelay;            // Usage 0x000F00A7: Start Delay, Value = 0 to 255, Physical = Value in 10⁻² s units
+    uint8_t LoopCount;             // Usage 0x000F007C: Loop Count, Value = 0 to 255
 } xbox1914BtOutputReport03_t;
+
+#endif

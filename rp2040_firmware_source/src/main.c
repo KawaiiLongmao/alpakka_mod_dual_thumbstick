@@ -43,7 +43,6 @@ void main_init()
 //     stdio_uart_init();
 // #endif
     stdio_init_all();
-    logging_set_level(LOG_INFO);
     logging_init();
     // Load config.
     title();

@@ -263,7 +263,7 @@
 #define PROC_IGNORE_LED_WARNINGS PROC_INDEX + 41
 
 void hid_thanks();
-void hid_matrix_reset();
+void hid_matrix_reset(uint8_t keep);
 void hid_press(uint8_t key);
 void hid_release(uint8_t key);
 void hid_press_multiple(uint8_t *keys);
@@ -278,6 +278,7 @@ void hid_press_multiple_later_callback(alarm_id_t alarm, uint8_t *keys);
 void hid_release_multiple_later_callback(alarm_id_t alarm, uint8_t *keys);
 void hid_macro(uint8_t index);
 bool hid_is_axis(uint8_t key);
+bool hid_is_mouse_move(uint8_t key);
 void hid_mouse_move(int16_t x, int16_t y);
 void hid_mouse_wheel(int8_t z);
 void hid_gamepad_lx(double value);

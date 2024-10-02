@@ -101,19 +101,19 @@
       64               /* Size */            \
   )
 
-#define DESCRIPTOR_INTERFACE_XUSB                                     \
-  0x09,                      /* bLength */                            \
-      0x04,                  /* bDescriptorType: interface */         \
-      ITF_XINPUT,            /* bInterfaceNumber */                   \
-      0x00,                  /* bAlternateSetting */                  \
-      0x02,                  /* bNumEndpoints */                      \
-      0xFF,                  /* bInterfaceClass */                    \
-      0x5D,                  /* bInterfaceSubClass */                 \
-      0x01,                  /* bInterfaceProtocol */                 \
-      0x00, /* iInterface */ /* Undocumented */                       \
-      0x10, 0x21, 0x10, 0x01, 0x01, 0x24, 0x81, 0x14,                 \
-      0x03, 0x00, 0x03, 0x13, 0x02, 0x00, 0x03, 0x00, /* Endpoints */ \
-      DESCRIPTOR_ENDPOINT_XINPUT_IN,                                  \
+#define DESCRIPTOR_INTERFACE_XUSB                                         \
+  0x09,           /* bLength */                                           \
+      0x04,       /* bDescriptorType: interface */                        \
+      ITF_XINPUT, /* bInterfaceNumber */                                  \
+      0x00,       /* bAlternateSetting */                                 \
+      0x02,       /* bNumEndpoints */                                     \
+      0xFF,       /* bInterfaceClass */                                   \
+      0x5D,       /* bInterfaceSubClass */                                \
+      0x01,       /* bInterfaceProtocol */                                \
+      0x00,       /* iInterface */                                        \
+      /* Undocumented: */ 0x10, 0x21, 0x10, 0x01, 0x01, 0x24, 0x81, 0x14, \
+      0x03, 0x00, 0x03, 0x13, 0x02, 0x00, 0x03, 0x00,                     \
+      /* Endpoints: */ DESCRIPTOR_ENDPOINT_XINPUT_IN,                     \
       DESCRIPTOR_ENDPOINT_XINPUT_OUT
 
 #define DESCRIPTOR_ENDPOINT_XINPUT_IN                 \

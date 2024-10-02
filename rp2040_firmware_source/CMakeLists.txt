@@ -85,6 +85,7 @@ target_sources(${PROJECT} PUBLIC
     src/profiles/rts.c
     src/self_test.c
     src/rotary.c
+    src/thanks.c
     src/thumbstick.c
     src/right_thumbstick.c
     src/touch.c

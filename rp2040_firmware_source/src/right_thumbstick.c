@@ -109,8 +109,6 @@ void right_thumbstick_calibrate()
     float y = 0;
     for (uint32_t i = 0; i < CFG_CALIBRATION_SAMPLES_THUMBSTICK; i++)
     {
-        if (!(i % CFG_CALIBRATION_BLINK_FREQ))
-            led_show_cycle_step();
         x += right_thumbstick_adc(rts_x_adc_channel, 0.0);
         y += right_thumbstick_adc(rts_y_adc_channel, 0.0);
     }
@@ -143,6 +141,55 @@ void right_thumbstick_report_axis(uint8_t axis, float value)
         hid_gamepad_lz(value);
     else if (axis == GAMEPAD_AXIS_RZ)
         hid_gamepad_rz(value);
+}
+
+void right_thumbstick_report_mouse_move(uint8_t action, float thumbstick_value, int response_curve, int sensitivity_level)
+{
+    if (response_curve < 1 || response_curve > 3)
+        response_curve = LINEAR;
+    if (sensitivity_level < 1 || sensitivity_level > 10)
+        sensitivity_level = 1;
+
+    double mouse_move_value = 0;
+    const double regular_value = BIT_7 / 10;
+    static uint8_t once_timer = 0;
+    if (response_curve == LINEAR)
+    {
+        mouse_move_value = thumbstick_value * regular_value * sensitivity_level;
+    }
+    else if (response_curve == TRADITIONAL_CURVE)
+    {
+        mouse_move_value = pow(1 + sensitivity_level / 10.0, thumbstick_value * 7);
+    }
+    else if (response_curve == CONSTANT)
+    {
+        if (thumbstick_value > 0)
+            mouse_move_value = sensitivity_level;
+    }
+    // else if (response_curve == ONCE)
+    // {
+    //     if (thumbstick_value != 0)
+    //     {
+    //         if (once_timer < sensitivity_level)
+    //         {
+    //             mouse_move_value = 2;
+    //             once_timer++;
+    //         }
+    //     }
+    //     else
+    //     {
+    //         once_timer = 0;
+    //     }
+    // }
+    int16_t value = constrain(mouse_move_value, -BIT_7, BIT_7);
+    if (action == MOUSE_X)
+        hid_mouse_move(value, 0);
+    else if (action == MOUSE_Y)
+        hid_mouse_move(0, value);
+    else if (action == MOUSE_X_NEG)
+        hid_mouse_move(-value, 0);
+    else if (action == MOUSE_Y_NEG)
+        hid_mouse_move(0, -value);
 }
 
 uint8_t right_thumbstick_get_direction(RThumbstick *self, float angle)
@@ -185,7 +232,7 @@ uint8_t right_thumbstick_get_direction(RThumbstick *self, float angle)
     return mask;
 }
 
-void RThumbstick__report_axial(
+void right_thumbstick_report_axial(
     RThumbstick *self,
     ThumbstickPosition pos)
 {
@@ -211,35 +258,71 @@ void RThumbstick__report_axial(
             self->down_right.virtual_press = true;
     }
     // Report directional virtual buttons or axis.
-    //// DIR8_MASK
-    if (!hid_is_axis(self->up_left.actions[0]))
-        self->up_left.report(&self->up_left);
-    if (!hid_is_axis(self->up_right.actions[0]))
-        self->up_right.report(&self->up_right);
-    if (!hid_is_axis(self->down_left.actions[0]))
-        self->down_left.report(&self->down_left);
-    if (!hid_is_axis(self->down_right.actions[0]))
-        self->down_right.report(&self->down_right);
+    bool report_mouse_move = false;
     //// Left.
-    if (!hid_is_axis(self->left.actions[0]))
-        self->left.report(&self->left);
-    else
+    if (hid_is_axis(self->left.actions[0]))
         right_thumbstick_report_axis(self->left.actions[0], -constrain(pos.x, -1, 0));
+    else if (hid_is_mouse_move(self->left.actions[0]))
+    {
+        right_thumbstick_report_mouse_move(self->left.actions[0],
+                                           -constrain(pos.x, -1, 0),
+                                           self->up_left.actions[0] - 29,
+                                           self->down_left.actions[0] - 29);
+        report_mouse_move = true;
+    }
+    else
+        self->left.report(&self->left);
     //// Right.
-    if (!hid_is_axis(self->right.actions[0]))
-        self->right.report(&self->right);
-    else
+    if (hid_is_axis(self->right.actions[0]))
         right_thumbstick_report_axis(self->right.actions[0], constrain(pos.x, 0, 1));
+    else if (hid_is_mouse_move(self->right.actions[0]))
+    {
+        right_thumbstick_report_mouse_move(self->right.actions[0],
+                                           constrain(pos.x, 0, 1),
+                                           self->up_left.actions[0] - 29,
+                                           self->down_left.actions[0] - 29);
+        report_mouse_move = true;
+    }
+    else
+        self->right.report(&self->right);
     //// Up.
-    if (!hid_is_axis(self->up.actions[0]))
-        self->up.report(&self->up);
-    else
+    if (hid_is_axis(self->up.actions[0]))
         right_thumbstick_report_axis(self->up.actions[0], -constrain(pos.y, -1, 0));
-    //// Down.
-    if (!hid_is_axis(self->down.actions[0]))
-        self->down.report(&self->down);
+    else if (hid_is_mouse_move(self->up.actions[0]))
+    {
+        right_thumbstick_report_mouse_move(self->up.actions[0],
+                                           -constrain(pos.y, -1, 0),
+                                           self->up_left.actions[0] - 29,
+                                           self->down_right.actions[0] - 29);
+        report_mouse_move = true;
+    }
     else
+        self->up.report(&self->up);
+    //// Down.
+    if (hid_is_axis(self->down.actions[0]))
         right_thumbstick_report_axis(self->down.actions[0], constrain(pos.y, 0, 1));
+    else if (hid_is_mouse_move(self->down.actions[0]))
+    {
+        right_thumbstick_report_mouse_move(self->down.actions[0],
+                                           constrain(pos.y, 0, 1),
+                                           self->up_left.actions[0] - 29,
+                                           self->down_right.actions[0] - 29);
+        report_mouse_move = true;
+    }
+    else
+        self->down.report(&self->down);
+    //// DIR8_MASK
+    if (!report_mouse_move)
+    {
+        if (!hid_is_axis(self->up_left.actions[0]))
+            self->up_left.report(&self->up_left);
+        if (!hid_is_axis(self->up_right.actions[0]))
+            self->up_right.report(&self->up_right);
+        if (!hid_is_axis(self->down_left.actions[0]))
+            self->down_left.report(&self->down_left);
+        if (!hid_is_axis(self->down_right.actions[0]))
+            self->down_right.report(&self->down_right);
+    }
     // Report push.
     self->push.report(&self->push);
 }
@@ -271,19 +354,20 @@ void RThumbstick__report(RThumbstick *self)
     y = -cos(radians(angle)) * radius;
     ThumbstickPosition pos = {x, y, angle, radius};
     // Report.
-    RThumbstick__report_axial(self, pos);
+    right_thumbstick_report_axial(self, pos);
 }
 
 void RThumbstick__reset(RThumbstick *self)
 {
-    if (self->mode == THUMBSTICK_MODE_4DIR)
-    {
-        self->left.reset(&self->left);
-        self->right.reset(&self->right);
-        self->up.reset(&self->up);
-        self->down.reset(&self->down);
-        self->push.reset(&self->push);
-    }
+    self->left.reset(&self->left);
+    self->right.reset(&self->right);
+    self->up.reset(&self->up);
+    self->down.reset(&self->down);
+    self->push.reset(&self->push);
+    self->up_left.reset(&self->up_left);
+    self->up_right.reset(&self->up_right);
+    self->down_left.reset(&self->down_left);
+    self->down_right.reset(&self->down_right);
 }
 
 RThumbstick RThumbstick_(

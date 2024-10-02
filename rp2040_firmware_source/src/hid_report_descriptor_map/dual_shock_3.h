@@ -1,3 +1,6 @@
+#ifndef DUAL_SHOCK_3_H
+#define DUAL_SHOCK_3_H
+
 #pragma once
 
 #include <stdint.h>
@@ -129,3 +132,5 @@ typedef struct
     // uint8_t unknown3[97];
     uint8_t unknown3;
 } ds3_input_report_t;
+
+#endif

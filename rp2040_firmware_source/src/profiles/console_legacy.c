@@ -173,6 +173,7 @@ void config_profile_default_console_legacy(CtrlProfile *profile)
 
     // Gyro.
     profile->sections[SECTION_GYRO].gyro = (CtrlGyro){
-        .mode = GYRO_MODE_OFF,
+        .mode = GYRO_MODE_TOUCH_ON,
+        .engage = PIN_TOUCH_IN,
     };
 }

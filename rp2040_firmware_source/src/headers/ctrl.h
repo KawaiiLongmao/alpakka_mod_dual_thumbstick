@@ -37,6 +37,11 @@ typedef enum Ctrl_cfg_type_enum
     SENS_TOUCH,
     SENS_MOUSE,
     DEADZONE,
+    LOG_MASK,
+    LONG_CALIBRATION,
+    SWAP_GYROS,
+    TOUCH_INVERT_POLARITY,
+    GYRO_USER_OFFSET,
 } Ctrl_cfg_type;
 
 typedef enum CtrlSectionType_enum
@@ -235,3 +240,5 @@ Ctrl ctrl_log(uint8_t *offset_ptr, uint8_t len);
 Ctrl ctrl_status_share();
 Ctrl ctrl_config_share(uint8_t index);
 Ctrl ctrl_section_share(uint8_t profile_index, uint8_t section_index);
+
+void ctrl_config_set(Ctrl_cfg_type key, uint8_t preset, uint8_t values[5]);

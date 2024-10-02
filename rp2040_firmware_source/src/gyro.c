@@ -315,11 +315,16 @@ void Gyro__report_incremental(Gyro *self)
 
 void report_gyro_and_accel(Gyro *self)
 {
-    gyro_accel_correction();
     Vector imu_gyro = imu_read_gyro();
-    // Vector imu_accel = imu_read_accel();
-    hid_gamepad_gyro(imu_gyro.x, imu_gyro.y, imu_gyro.z);
-    hid_gamepad_accel(accel_smooth.x, accel_smooth.y, accel_smooth.z);
+    static Vector imu_gyro_smooth = {0};
+    imu_gyro_smooth = vector_smooth(imu_gyro_smooth, imu_gyro, 10);
+
+    Vector imu_accel = imu_read_accel();
+    static Vector imu_accel_smooth = {0};
+    imu_accel_smooth = vector_smooth(imu_accel_smooth, imu_accel, 50);
+
+    hid_gamepad_gyro(imu_gyro_smooth.x, imu_gyro_smooth.y, imu_gyro_smooth.z);
+    hid_gamepad_accel(imu_accel_smooth.x, imu_accel_smooth.y, imu_accel_smooth.z);
 }
 
 bool Gyro__is_engaged(Gyro *self)
@@ -342,7 +347,10 @@ void Gyro__report(Gyro *self)
         if (self->is_engaged(self))
         {
             self->report_incremental(self);
-            // report_gyro_and_accel(self);
+            if (config_current_protocol_exist_gyro())
+            {
+                report_gyro_and_accel(self);
+            }
         }
     }
     else if (self->mode == GYRO_MODE_TOUCH_OFF)
@@ -350,13 +358,19 @@ void Gyro__report(Gyro *self)
         if (!self->is_engaged(self))
         {
             self->report_incremental(self);
-            // report_gyro_and_accel(self);
+            if (config_current_protocol_exist_gyro())
+            {
+                report_gyro_and_accel(self);
+            }
         }
     }
     else if (self->mode == GYRO_MODE_ALWAYS_ON)
     {
         self->report_incremental(self);
-        // report_gyro_and_accel(self);
+        if (config_current_protocol_exist_gyro())
+        {
+            report_gyro_and_accel(self);
+        }
     }
     else if (self->mode == GYRO_MODE_AXIS_ABSOLUTE)
     {

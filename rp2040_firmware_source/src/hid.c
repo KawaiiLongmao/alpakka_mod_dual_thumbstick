@@ -1,6 +1,34 @@
 // SPDX-License-Identifier: GPL-2.0-only
 // Copyright (C) 2022, Input Labs Oy.
 
+/*
+HID layer is responsible for managing all the outputs that are sent to the
+operating system (via USB or wireless), by keeping a register of all the active
+actions (requested by the current profile) and syncing its state with the
+available interfaces (keyboard, mouse, gamepad...).
+
+Physical controller --> Profile --> [HID layer] --> HID keyboard
+                    --> Profile -->             --> HID mouse
+                    --> Profile -->             --> XInput gamepad
+                    --> Profile -->             --> Internal procedures
+
+At the end of each cycle (determined by the polling rate) the HID layer checks
+if the potential new report is different from the last report sent to the
+interfaces (USB keyboard, USB mouse, gamepad...), and sends the report if
+required.
+
+The state matrix is a representation of all the actions that could be sent
+(output) and internal operations (procedures) requested by the user. It keep
+track of how many references to these actions are active.
+As a simplification: Button presses increase the counter by one, and button
+releases decrease the counter by one.
+
+To avoid orphan references, the state matrix is usually re-initialized (reset)
+to zeros when the user changes the active profile, otherwise the disabled
+profile won't ever trigger the corresponding counter decrease of held buttons
+during the profile change.
+*/
+
 #include <tusb.h>
 #include "config.h"
 #include "ctrl.h"
@@ -11,7 +39,7 @@
 #include "common.h"
 #include "webusb.h"
 #include "logging.h"
-#include "thanks.c"
+#include "thanks.h"
 #include "generic.h"
 #include "keybrd.h"
 #include "mouse.h"
@@ -43,12 +71,17 @@ double gamepad_rz = 0;
 
 Vector gamepad_gyro = {0};
 Vector gamepad_accel = {0};
+// bool synced_switch_pro = true;
+// input_report_t switch_pro_gamepad_data;
+SwitchProUsb switchProUsb;
 
-void hid_matrix_reset()
+void hid_matrix_reset(uint8_t keep)
 {
-    for (uint8_t i = 0; i < 255; i++)
+    for (uint8_t action = 0; action < 255; action++)
     {
-        state_matrix[i] = 0;
+        if (action == keep)
+            continue; // Optionally do not reset specific actions.
+        state_matrix[action] = 0;
     }
     synced_keyboard = false;
     synced_mouse = false;
@@ -177,13 +210,16 @@ void hid_release(uint8_t key)
         hid_procedure_release(key);
     else
     {
-        state_matrix[key] -= 1;
-        if (key >= GAMEPAD_INDEX)
-            synced_gamepad = false;
-        else if (key >= MOUSE_INDEX)
-            synced_mouse = false;
-        else
-            synced_keyboard = false;
+        if (state_matrix[key] > 0)
+        { // Do not allow to wrap / go negative.
+            state_matrix[key] -= 1;
+            if (key >= GAMEPAD_INDEX)
+                synced_gamepad = false;
+            else if (key >= MOUSE_INDEX)
+                synced_mouse = false;
+            else
+                synced_keyboard = false;
+        }
     }
 }
 
@@ -302,6 +338,11 @@ void hid_macro(uint8_t index)
 bool hid_is_axis(uint8_t key)
 {
     return is_between(key, GAMEPAD_AXIS_INDEX, PROC_INDEX - 1);
+}
+
+bool hid_is_mouse_move(uint8_t key)
+{
+    return is_between(key, MOUSE_X, MOUSE_Y_NEG);
 }
 
 void hid_mouse_move(int16_t x, int16_t y)
@@ -555,106 +596,105 @@ void hid_xinput_report()
     xinput_send_report(&report);
 }
 
-void hid_switch_pro_report_simple()
+// void hid_switch_pro_report_simple()
+// {
+//     // Adjust range from [-1,1] to [0,65535].
+//     uint16_t lx_report = (hid_axis(gamepad_lx, GAMEPAD_AXIS_LX, GAMEPAD_AXIS_LX_NEG) + 1) * BIT_15;
+//     uint16_t ly_report = (hid_axis(gamepad_ly, GAMEPAD_AXIS_LY, GAMEPAD_AXIS_LY_NEG) + 1) * BIT_15;
+//     uint16_t rx_report = (hid_axis(gamepad_rx, GAMEPAD_AXIS_RX, GAMEPAD_AXIS_RX_NEG) + 1) * BIT_15;
+//     uint16_t ry_report = (hid_axis(gamepad_ry, GAMEPAD_AXIS_RY, GAMEPAD_AXIS_RY_NEG) + 1) * BIT_15;
+//     // Adjust range from [0,1] to [0,255].
+//     // uint16_t lz_report = hid_axis(gamepad_lz, GAMEPAD_AXIS_LZ, 0) * BIT_8;
+//     // uint16_t rz_report = hid_axis(gamepad_rz, GAMEPAD_AXIS_RZ, 0) * BIT_8;
+//     // switchProInputReport63_t report = {0};
+//     // report.btnA = state_matrix[GAMEPAD_A];
+//     // report.btnB = state_matrix[GAMEPAD_B];
+//     // report.btnX = state_matrix[GAMEPAD_X];
+//     // report.btnY = state_matrix[GAMEPAD_Y];
+//     // report.btnL = state_matrix[GAMEPAD_L1];
+//     // report.btnR = state_matrix[GAMEPAD_R1];
+//     // report.btnZL = hid_axis(gamepad_lz, GAMEPAD_AXIS_LZ, 0);
+//     // report.btnZR = hid_axis(gamepad_rz, GAMEPAD_AXIS_RZ, 0);
+//     // report.btnMinus = state_matrix[GAMEPAD_SELECT];
+//     // report.btnPlus = state_matrix[GAMEPAD_START];
+//     // report.btnLS = state_matrix[GAMEPAD_L3];
+//     // report.btnRS = state_matrix[GAMEPAD_R3];
+//     // report.btnHome = state_matrix[GAMEPAD_HOME];
+//     // report.btnCapture = 0;
+//     // report.hat = dpad_button_to_hat_switch_8(
+//     //     state_matrix[GAMEPAD_UP],
+//     //     state_matrix[GAMEPAD_DOWN],
+//     //     state_matrix[GAMEPAD_LEFT],
+//     //     state_matrix[GAMEPAD_RIGHT]
+//     // );
+//     // report.X = lx_report;
+//     // report.Y = ly_report;
+//     // report.Z = rx_report;
+//     // report.Rz = ry_report;
+
+//     switchProUsbInputReport30_t report = {0};
+//     report.reportId = SWITCH_PRO_INPUT_ID_FULL_CONTROLLER_STATE;
+//     report.ButtonA = state_matrix[GAMEPAD_A];
+//     report.ButtonB = state_matrix[GAMEPAD_B];
+//     report.ButtonX = state_matrix[GAMEPAD_X];
+//     report.ButtonY = state_matrix[GAMEPAD_Y];
+//     report.ButtonL = state_matrix[GAMEPAD_L1];
+//     report.ButtonR = state_matrix[GAMEPAD_R1];
+//     report.ButtonZL = hid_axis(gamepad_lz, GAMEPAD_AXIS_LZ, 0);
+//     report.ButtonZR = hid_axis(gamepad_rz, GAMEPAD_AXIS_RZ, 0);
+//     report.ButtonMinus = state_matrix[GAMEPAD_SELECT];
+//     report.ButtonPlus = state_matrix[GAMEPAD_START];
+//     report.ButtonLS = state_matrix[GAMEPAD_L3];
+//     report.ButtonRS = state_matrix[GAMEPAD_R3];
+//     report.ButtonHome = state_matrix[GAMEPAD_HOME];
+//     report.ButtonCapture = 0;
+//     report.X = lx_report;
+//     report.Y = ly_report;
+//     report.Z = rx_report;
+//     report.Rz = ry_report;
+//     report.HatSwitch = dpad_button_to_hat_switch_8(
+//         state_matrix[GAMEPAD_UP],
+//         state_matrix[GAMEPAD_DOWN],
+//         state_matrix[GAMEPAD_LEFT],
+//         state_matrix[GAMEPAD_RIGHT]);
+
+//     const uint8_t *u8_report = (const uint8_t *)&report;
+//     tud_hid_report(u8_report[0], &u8_report[1], sizeof(report) - 1);
+// }
+
+void switch_pro_gamepad_data_update()
 {
-    // Adjust range from [-1,1] to [0,65535].
-    uint16_t lx_report = (hid_axis(gamepad_lx, GAMEPAD_AXIS_LX, GAMEPAD_AXIS_LX_NEG) + 1) * BIT_15;
-    uint16_t ly_report = (hid_axis(gamepad_ly, GAMEPAD_AXIS_LY, GAMEPAD_AXIS_LY_NEG) + 1) * BIT_15;
-    uint16_t rx_report = (hid_axis(gamepad_rx, GAMEPAD_AXIS_RX, GAMEPAD_AXIS_RX_NEG) + 1) * BIT_15;
-    uint16_t ry_report = (hid_axis(gamepad_ry, GAMEPAD_AXIS_RY, GAMEPAD_AXIS_RY_NEG) + 1) * BIT_15;
+    // Adjust range from [-1,1] to [0,4095].
+    uint16_t lx_report = (hid_axis(gamepad_lx, GAMEPAD_AXIS_LX, GAMEPAD_AXIS_LX_NEG) + 1) * BIT_11;
+    uint16_t ly_report = (hid_axis(gamepad_ly, GAMEPAD_AXIS_LY, GAMEPAD_AXIS_LY_NEG) + 1) * BIT_11;
+    uint16_t rx_report = (hid_axis(gamepad_rx, GAMEPAD_AXIS_RX, GAMEPAD_AXIS_RX_NEG) + 1) * BIT_11;
+    uint16_t ry_report = (hid_axis(gamepad_ry, GAMEPAD_AXIS_RY, GAMEPAD_AXIS_RY_NEG) + 1) * BIT_11;
     // Adjust range from [0,1] to [0,255].
     // uint16_t lz_report = hid_axis(gamepad_lz, GAMEPAD_AXIS_LZ, 0) * BIT_8;
     // uint16_t rz_report = hid_axis(gamepad_rz, GAMEPAD_AXIS_RZ, 0) * BIT_8;
-    // switchProInputReport63_t report = {0};
-    // report.btnA = state_matrix[GAMEPAD_A];
-    // report.btnB = state_matrix[GAMEPAD_B];
-    // report.btnX = state_matrix[GAMEPAD_X];
-    // report.btnY = state_matrix[GAMEPAD_Y];
-    // report.btnL = state_matrix[GAMEPAD_L1];
-    // report.btnR = state_matrix[GAMEPAD_R1];
-    // report.btnZL = hid_axis(gamepad_lz, GAMEPAD_AXIS_LZ, 0);
-    // report.btnZR = hid_axis(gamepad_rz, GAMEPAD_AXIS_RZ, 0);
-    // report.btnMinus = state_matrix[GAMEPAD_SELECT];
-    // report.btnPlus = state_matrix[GAMEPAD_START];
-    // report.btnLS = state_matrix[GAMEPAD_L3];
-    // report.btnRS = state_matrix[GAMEPAD_R3];
-    // report.btnHome = state_matrix[GAMEPAD_HOME];
-    // report.btnCapture = 0;
-    // report.hat = dpad_button_to_hat_switch_8(
-    //     state_matrix[GAMEPAD_UP],
-    //     state_matrix[GAMEPAD_DOWN],
-    //     state_matrix[GAMEPAD_LEFT],
-    //     state_matrix[GAMEPAD_RIGHT]
-    // );
-    // report.X = lx_report;
-    // report.Y = ly_report;
-    // report.Z = rx_report;
-    // report.Rz = ry_report;
-
-    switchProInputReport30_t report = {0};
-    report.reportId = SWITCH_PRO_INPUT_ID_FULL_CONTROLLER_STATE;
-    report.ButtonA = state_matrix[GAMEPAD_A];
-    report.ButtonB = state_matrix[GAMEPAD_B];
-    report.ButtonX = state_matrix[GAMEPAD_X];
-    report.ButtonY = state_matrix[GAMEPAD_Y];
-    report.ButtonL = state_matrix[GAMEPAD_L1];
-    report.ButtonR = state_matrix[GAMEPAD_R1];
-    report.ButtonZL = hid_axis(gamepad_lz, GAMEPAD_AXIS_LZ, 0);
-    report.ButtonZR = hid_axis(gamepad_rz, GAMEPAD_AXIS_RZ, 0);
-    report.ButtonMinus = state_matrix[GAMEPAD_SELECT];
-    report.ButtonPlus = state_matrix[GAMEPAD_START];
-    report.ButtonLS = state_matrix[GAMEPAD_L3];
-    report.ButtonRS = state_matrix[GAMEPAD_R3];
-    report.ButtonHome = state_matrix[GAMEPAD_HOME];
-    report.ButtonCapture = 0;
-    report.X = lx_report;
-    report.Y = ly_report;
-    report.Z = rx_report;
-    report.Rz = ry_report;
-    report.HatSwitch = dpad_button_to_hat_switch_8(
-        state_matrix[GAMEPAD_UP],
-        state_matrix[GAMEPAD_DOWN],
-        state_matrix[GAMEPAD_LEFT],
-        state_matrix[GAMEPAD_RIGHT]);
-
-    const uint8_t *u8_report = (const uint8_t *)&report;
-    tud_hid_report(u8_report[0], &u8_report[1], sizeof(report) - 1);
-}
-
-void hid_switch_pro_report_full()
-{
-    // Adjust range from [-1,1] to [0,65535].
-    uint16_t lx_report = (hid_axis(gamepad_lx, GAMEPAD_AXIS_LX, GAMEPAD_AXIS_LX_NEG) + 1) * BIT_15;
-    uint16_t ly_report = (hid_axis(gamepad_ly, GAMEPAD_AXIS_LY, GAMEPAD_AXIS_LY_NEG) + 1) * BIT_15;
-    uint16_t rx_report = (hid_axis(gamepad_rx, GAMEPAD_AXIS_RX, GAMEPAD_AXIS_RX_NEG) + 1) * BIT_15;
-    uint16_t ry_report = (hid_axis(gamepad_ry, GAMEPAD_AXIS_RY, GAMEPAD_AXIS_RY_NEG) + 1) * BIT_15;
-    // Adjust range from [0,1] to [0,255].
-    // uint16_t lz_report = hid_axis(gamepad_lz, GAMEPAD_AXIS_LZ, 0) * BIT_8;
-    // uint16_t rz_report = hid_axis(gamepad_rz, GAMEPAD_AXIS_RZ, 0) * BIT_8;
-    input_report_t report = {0};
-    report.id = SWITCH_PRO_INPUT_ID_FULL_CONTROLLER_STATE;
-    report.controller_data.button.A = state_matrix[GAMEPAD_A];
-    report.controller_data.button.B = state_matrix[GAMEPAD_B];
-    report.controller_data.button.X = state_matrix[GAMEPAD_X];
-    report.controller_data.button.Y = state_matrix[GAMEPAD_Y];
-    report.controller_data.button.L = state_matrix[GAMEPAD_L1];
-    report.controller_data.button.R = state_matrix[GAMEPAD_R1];
-    report.controller_data.button.ZL = hid_axis(gamepad_lz, GAMEPAD_AXIS_LZ, 0);
-    report.controller_data.button.ZR = hid_axis(gamepad_rz, GAMEPAD_AXIS_RZ, 0);
-    report.controller_data.button.MINUS = state_matrix[GAMEPAD_SELECT];
-    report.controller_data.button.PLUS = state_matrix[GAMEPAD_START];
-    report.controller_data.button.LS = state_matrix[GAMEPAD_L3];
-    report.controller_data.button.RS = state_matrix[GAMEPAD_R3];
-    report.controller_data.button.HOME = state_matrix[GAMEPAD_HOME];
-    report.controller_data.button.CAPTURE = 0;
-    report.controller_data.button.DPAD_UP = state_matrix[GAMEPAD_UP];
-    report.controller_data.button.DPAD_DOWN = state_matrix[GAMEPAD_DOWN];
-    report.controller_data.button.DPAD_LEFT = state_matrix[GAMEPAD_LEFT];
-    report.controller_data.button.DPAD_RIGHT = state_matrix[GAMEPAD_RIGHT];
-    report.controller_data.left_stick.X = lx_report;
-    report.controller_data.left_stick.Y = ly_report;
-    report.controller_data.right_stick.X = rx_report;
-    report.controller_data.right_stick.Y = ry_report;
+    switchProUsb.gamepad_data.id = SWITCH_PRO_USB_INPUT_ID_FULL_CONTROLLER_STATE;
+    switchProUsb.gamepad_data.controller_data.button.A = state_matrix[GAMEPAD_A];
+    switchProUsb.gamepad_data.controller_data.button.B = state_matrix[GAMEPAD_B];
+    switchProUsb.gamepad_data.controller_data.button.X = state_matrix[GAMEPAD_X];
+    switchProUsb.gamepad_data.controller_data.button.Y = state_matrix[GAMEPAD_Y];
+    switchProUsb.gamepad_data.controller_data.button.L = state_matrix[GAMEPAD_L1];
+    switchProUsb.gamepad_data.controller_data.button.R = state_matrix[GAMEPAD_R1];
+    switchProUsb.gamepad_data.controller_data.button.ZL = hid_axis(gamepad_lz, GAMEPAD_AXIS_LZ, 0);
+    switchProUsb.gamepad_data.controller_data.button.ZR = hid_axis(gamepad_rz, GAMEPAD_AXIS_RZ, 0);
+    switchProUsb.gamepad_data.controller_data.button.MINUS = state_matrix[GAMEPAD_SELECT];
+    switchProUsb.gamepad_data.controller_data.button.PLUS = state_matrix[GAMEPAD_START];
+    switchProUsb.gamepad_data.controller_data.button.LS = state_matrix[GAMEPAD_L3];
+    switchProUsb.gamepad_data.controller_data.button.RS = state_matrix[GAMEPAD_R3];
+    switchProUsb.gamepad_data.controller_data.button.HOME = state_matrix[GAMEPAD_HOME];
+    switchProUsb.gamepad_data.controller_data.button.CAPTURE = 0;
+    switchProUsb.gamepad_data.controller_data.button.DPAD_UP = state_matrix[GAMEPAD_UP];
+    switchProUsb.gamepad_data.controller_data.button.DPAD_DOWN = state_matrix[GAMEPAD_DOWN];
+    switchProUsb.gamepad_data.controller_data.button.DPAD_LEFT = state_matrix[GAMEPAD_LEFT];
+    switchProUsb.gamepad_data.controller_data.button.DPAD_RIGHT = state_matrix[GAMEPAD_RIGHT];
+    switchProUsb.gamepad_data.controller_data.left_stick.X = lx_report;
+    switchProUsb.gamepad_data.controller_data.left_stick.Y = ly_report;
+    switchProUsb.gamepad_data.controller_data.right_stick.X = rx_report;
+    switchProUsb.gamepad_data.controller_data.right_stick.Y = ry_report;
 
     // static uint8_t packetTimer = 0;
     // if (packetTimer < BIT_8)
@@ -664,63 +704,72 @@ void hid_switch_pro_report_full()
     // report.controller_state.power = 0;
     // report.controller_state.battery = 2;
 
-    const uint8_t *u8_report = (const uint8_t *)&report;
-    tud_hid_report(u8_report[0], &u8_report[1], SWITCH_PRO_USB_INPUT_REPORT_FULL_SIZE);
+    switchProUsb.handle_input_0x30(&switchProUsb);
+    if (switchProUsb.hid_report_open)
+        tud_hid_report(switchProUsb.hid_report_buffer[0], &switchProUsb.hid_report_buffer[1], SWITCH_PRO_USB_REPORT_SIZE);
+    // const uint8_t *u8_report = (const uint8_t *)&report;
+    // tud_hid_report(u8_report[0], &u8_report[1], SWITCH_PRO_USB_INPUT_REPORT_FULL_SIZE);
 }
 
-void hid_switch_pro_report()
+void hid_switch_pro_report(uint8_t *hid_rx_buffer, uint8_t len)
 {
-    hid_switch_pro_report_simple();
-    // hid_switch_pro_report_full();
+    switchProUsb.do_work(&switchProUsb, hid_rx_buffer, len);
+    if (switchProUsb.hid_report_open)
+    {
+        tud_task();
+        if (tud_ready())
+            if (tud_hid_ready())
+                tud_hid_report(switchProUsb.hid_report_buffer[0], &switchProUsb.hid_report_buffer[1], SWITCH_PRO_USB_REPORT_SIZE);
+    }
 }
 
-void hid_xbox1914_report()
-{
-    // Adjust range from [-1,1] to [0,65535].
-    uint16_t lx_report = (hid_axis(gamepad_lx, GAMEPAD_AXIS_LX, GAMEPAD_AXIS_LX_NEG) + 1) * BIT_15;
-    uint16_t ly_report = (hid_axis(gamepad_ly, GAMEPAD_AXIS_LY, GAMEPAD_AXIS_LY_NEG) + 1) * BIT_15;
-    uint16_t rx_report = (hid_axis(gamepad_rx, GAMEPAD_AXIS_RX, GAMEPAD_AXIS_RX_NEG) + 1) * BIT_15;
-    uint16_t ry_report = (hid_axis(gamepad_ry, GAMEPAD_AXIS_RY, GAMEPAD_AXIS_RY_NEG) + 1) * BIT_15;
-    // Adjust range from [0,1] to [0,255].
-    uint16_t lz_report = hid_axis(gamepad_lz, GAMEPAD_AXIS_LZ, 0) * BIT_8;
-    uint16_t rz_report = hid_axis(gamepad_rz, GAMEPAD_AXIS_RZ, 0) * BIT_8;
+// void hid_xbox1914_report()
+// {
+//     // Adjust range from [-1,1] to [0,65535].
+//     uint16_t lx_report = (hid_axis(gamepad_lx, GAMEPAD_AXIS_LX, GAMEPAD_AXIS_LX_NEG) + 1) * BIT_15;
+//     uint16_t ly_report = (hid_axis(gamepad_ly, GAMEPAD_AXIS_LY, GAMEPAD_AXIS_LY_NEG) + 1) * BIT_15;
+//     uint16_t rx_report = (hid_axis(gamepad_rx, GAMEPAD_AXIS_RX, GAMEPAD_AXIS_RX_NEG) + 1) * BIT_15;
+//     uint16_t ry_report = (hid_axis(gamepad_ry, GAMEPAD_AXIS_RY, GAMEPAD_AXIS_RY_NEG) + 1) * BIT_15;
+//     // Adjust range from [0,1] to [0,255].
+//     uint16_t lz_report = hid_axis(gamepad_lz, GAMEPAD_AXIS_LZ, 0) * BIT_8;
+//     uint16_t rz_report = hid_axis(gamepad_rz, GAMEPAD_AXIS_RZ, 0) * BIT_8;
 
-    xbox1914BtInputReport01_t report = {0};
-    report.reportId = XBOX_1914_INPUT_ID01;
-    report.X = lx_report;
-    report.Y = ly_report;
-    report.Z = rx_report;
-    report.Rz = ry_report;
-    report.Brake = lz_report;
-    report.Accelerator = rz_report;
-    report.HatSwitch = dpad_button_to_hat_switch_0(
-        state_matrix[GAMEPAD_UP],
-        state_matrix[GAMEPAD_DOWN],
-        state_matrix[GAMEPAD_LEFT],
-        state_matrix[GAMEPAD_RIGHT]);
-    report.ButtonA = state_matrix[GAMEPAD_A];
-    report.ButtonB = state_matrix[GAMEPAD_B];
-    report.ButtonX = state_matrix[GAMEPAD_X];
-    report.ButtonY = state_matrix[GAMEPAD_Y];
-    report.ButtonLB = state_matrix[GAMEPAD_L1];
-    report.ButtonRB = state_matrix[GAMEPAD_R1];
-    report.ButtonBack = state_matrix[GAMEPAD_SELECT];
-    report.ButtonStart = state_matrix[GAMEPAD_START];
-    report.ButtonXbox = state_matrix[GAMEPAD_HOME];
-    report.ButtonLS = state_matrix[GAMEPAD_L3];
-    report.ButtonRS = state_matrix[GAMEPAD_R3];
+//     xbox1914BtInputReport01_t report = {0};
+//     report.reportId = XBOX_1914_INPUT_ID01;
+//     report.X = lx_report;
+//     report.Y = ly_report;
+//     report.Z = rx_report;
+//     report.Rz = ry_report;
+//     report.Brake = lz_report;
+//     report.Accelerator = rz_report;
+//     report.HatSwitch = dpad_button_to_hat_switch_0(
+//         state_matrix[GAMEPAD_UP],
+//         state_matrix[GAMEPAD_DOWN],
+//         state_matrix[GAMEPAD_LEFT],
+//         state_matrix[GAMEPAD_RIGHT]);
+//     report.ButtonA = state_matrix[GAMEPAD_A];
+//     report.ButtonB = state_matrix[GAMEPAD_B];
+//     report.ButtonX = state_matrix[GAMEPAD_X];
+//     report.ButtonY = state_matrix[GAMEPAD_Y];
+//     report.ButtonLB = state_matrix[GAMEPAD_L1];
+//     report.ButtonRB = state_matrix[GAMEPAD_R1];
+//     report.ButtonBack = state_matrix[GAMEPAD_SELECT];
+//     report.ButtonStart = state_matrix[GAMEPAD_START];
+//     report.ButtonXbox = state_matrix[GAMEPAD_HOME];
+//     report.ButtonLS = state_matrix[GAMEPAD_L3];
+//     report.ButtonRS = state_matrix[GAMEPAD_R3];
 
-    const uint8_t *u8_report = (const uint8_t *)&report;
-    tud_hid_report(u8_report[0], &u8_report[1], sizeof(report) - 1);
-}
+//     const uint8_t *u8_report = (const uint8_t *)&report;
+//     tud_hid_report(u8_report[0], &u8_report[1], sizeof(report) - 1);
+// }
 
 void hid_dual_shock_4_report()
 {
     // Adjust range from [-1,1] to [0,255].
-    uint8_t lx_report = (hid_axis(gamepad_lx, GAMEPAD_AXIS_LX, GAMEPAD_AXIS_LX_NEG) + 1) / 2 * BIT_8;
-    uint8_t ly_report = (hid_axis(gamepad_ly, GAMEPAD_AXIS_LY, GAMEPAD_AXIS_LY_NEG) + 1) / 2 * BIT_8;
-    uint8_t rx_report = (hid_axis(gamepad_rx, GAMEPAD_AXIS_RX, GAMEPAD_AXIS_RX_NEG) + 1) / 2 * BIT_8;
-    uint8_t ry_report = (hid_axis(gamepad_ry, GAMEPAD_AXIS_RY, GAMEPAD_AXIS_RY_NEG) + 1) / 2 * BIT_8;
+    uint8_t lx_report = (hid_axis(gamepad_lx, GAMEPAD_AXIS_LX, GAMEPAD_AXIS_LX_NEG) + 1) * BIT_7;
+    uint8_t ly_report = (hid_axis(gamepad_ly, GAMEPAD_AXIS_LY, GAMEPAD_AXIS_LY_NEG) + 1) * BIT_7;
+    uint8_t rx_report = (hid_axis(gamepad_rx, GAMEPAD_AXIS_RX, GAMEPAD_AXIS_RX_NEG) + 1) * BIT_7;
+    uint8_t ry_report = (hid_axis(gamepad_ry, GAMEPAD_AXIS_RY, GAMEPAD_AXIS_RY_NEG) + 1) * BIT_7;
     // Adjust range from [0,1] to [0,255].
     uint16_t lz_report = hid_axis(gamepad_lz, GAMEPAD_AXIS_LZ, 0) * BIT_8;
     uint16_t rz_report = hid_axis(gamepad_rz, GAMEPAD_AXIS_RZ, 0) * BIT_8;
@@ -752,6 +801,13 @@ void hid_dual_shock_4_report()
     report.State.State.State.TriggerLeft = lz_report;
     report.State.State.State.TriggerRight = rz_report;
 
+    report.State.State.AngularVelocityX = (int16_t)(-gamepad_gyro.y / 1.9);
+    report.State.State.AngularVelocityZ = (int16_t)(-gamepad_gyro.x / 1.9);
+    report.State.State.AngularVelocityY = (int16_t)(gamepad_gyro.z / 1.9);
+    report.State.State.AccelerometerX = (int16_t)(-gamepad_accel.z / 1.9);
+    report.State.State.AccelerometerY = (int16_t)(-gamepad_accel.x / 1.9);
+    report.State.State.AccelerometerZ = (int16_t)(gamepad_accel.y / 1.9);
+
     const uint8_t *u8_report = (const uint8_t *)&report;
     tud_hid_report(u8_report[0], &u8_report[1], sizeof(report) - 1);
 }
@@ -759,10 +815,10 @@ void hid_dual_shock_4_report()
 void hid_dual_sense_report()
 {
     // Adjust range from [-1,1] to [0,255].
-    uint8_t lx_report = (hid_axis(gamepad_lx, GAMEPAD_AXIS_LX, GAMEPAD_AXIS_LX_NEG) + 1) / 2 * BIT_8;
-    uint8_t ly_report = (hid_axis(gamepad_ly, GAMEPAD_AXIS_LY, GAMEPAD_AXIS_LY_NEG) + 1) / 2 * BIT_8;
-    uint8_t rx_report = (hid_axis(gamepad_rx, GAMEPAD_AXIS_RX, GAMEPAD_AXIS_RX_NEG) + 1) / 2 * BIT_8;
-    uint8_t ry_report = (hid_axis(gamepad_ry, GAMEPAD_AXIS_RY, GAMEPAD_AXIS_RY_NEG) + 1) / 2 * BIT_8;
+    uint8_t lx_report = (hid_axis(gamepad_lx, GAMEPAD_AXIS_LX, GAMEPAD_AXIS_LX_NEG) + 1) * BIT_7;
+    uint8_t ly_report = (hid_axis(gamepad_ly, GAMEPAD_AXIS_LY, GAMEPAD_AXIS_LY_NEG) + 1) * BIT_7;
+    uint8_t rx_report = (hid_axis(gamepad_rx, GAMEPAD_AXIS_RX, GAMEPAD_AXIS_RX_NEG) + 1) * BIT_7;
+    uint8_t ry_report = (hid_axis(gamepad_ry, GAMEPAD_AXIS_RY, GAMEPAD_AXIS_RY_NEG) + 1) * BIT_7;
     // Adjust range from [0,1] to [0,255].
     uint8_t lz_report = hid_axis(gamepad_lz, GAMEPAD_AXIS_LZ, 0) * BIT_8;
     uint8_t rz_report = hid_axis(gamepad_rz, GAMEPAD_AXIS_RZ, 0) * BIT_8;
@@ -794,19 +850,12 @@ void hid_dual_sense_report()
     report.State.ButtonR3 = state_matrix[GAMEPAD_R3];
     report.State.ButtonHome = state_matrix[GAMEPAD_HOME];
 
-    // report.State.AngularVelocityX = constrain(gamepad_gyro.x, -1, 1) * BIT_15;
-    // report.State.AngularVelocityZ = constrain(gamepad_gyro.z, -1, 1) * BIT_15;
-    // report.State.AngularVelocityY = constrain(gamepad_gyro.y, -1, 1) * BIT_15;
-    report.State.AccelerometerX = constrain(gamepad_accel.x, -1, 1) * BIT_15;
-    report.State.AccelerometerY = constrain(gamepad_accel.y, -1, 1) * BIT_15;
-    report.State.AccelerometerZ = constrain(gamepad_accel.z, -1, 1) * BIT_15;
-
-    report.State.AngularVelocityX = (int16_t)gamepad_gyro.x;
-    report.State.AngularVelocityZ = (int16_t)gamepad_gyro.z;
-    report.State.AngularVelocityY = (int16_t)gamepad_gyro.y;
-    // report.State.AccelerometerX = (int16_t)gamepad_accel.x;
-    // report.State.AccelerometerY = (int16_t)gamepad_accel.y;
-    // report.State.AccelerometerZ = (int16_t)gamepad_accel.z;
+    report.State.AngularVelocityX = (int16_t)(-gamepad_gyro.y / 1.9);
+    report.State.AngularVelocityZ = (int16_t)(-gamepad_gyro.x / 1.9);
+    report.State.AngularVelocityY = (int16_t)(gamepad_gyro.z / 1.9);
+    report.State.AccelerometerX = (int16_t)(-gamepad_accel.z / 1.9);
+    report.State.AccelerometerY = (int16_t)(-gamepad_accel.x / 1.9);
+    report.State.AccelerometerZ = (int16_t)(gamepad_accel.y / 1.9);
 
     const uint8_t *u8_report = (const uint8_t *)&report;
     tud_hid_report(u8_report[0], &u8_report[1], sizeof(report) - 1);
@@ -820,6 +869,9 @@ void hid_gamepad_reset()
     gamepad_ry = 0;
     gamepad_lz = 0;
     gamepad_rz = 0;
+
+    gamepad_gyro = (Vector){0};
+    gamepad_accel = (Vector){0};
 }
 
 void hid_report()
@@ -878,7 +930,7 @@ void hid_report()
                 }
                 else if (config_get_protocol() == PROTOCOL_SWITCH_PRO)
                 {
-                    hid_switch_pro_report();
+                    switch_pro_gamepad_data_update();
                     synced_gamepad = true;
                     priority_gamepad = 0;
                 }
@@ -968,4 +1020,5 @@ void hid_init()
 {
     info("INIT: HID\n");
     alarm_pool = alarm_pool_create(2, 255);
+    switchProUsb = SwitchProUsb_();
 }

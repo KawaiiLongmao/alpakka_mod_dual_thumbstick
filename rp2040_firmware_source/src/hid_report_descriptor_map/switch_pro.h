@@ -1,35 +1,41 @@
 #pragma once
 
 #include <stdint.h>
+#include <stdbool.h>
 #include "util.h"
 
 #pragma pack(push, 1)
 
 /* HID input report id */
-#define SWITCH_PRO_INPUT_ID_STD 0x21           // Standard input reports used for subcommand replies.
-#define SWITCH_PRO_INPUT_ID_NFC_FW_UPDATE 0x23 // NFC/IR MCU FW update input report.
-#define SWITCH_PRO_INPUT_ID_FULL 0x30          // input reports with IMU data instead of subcommand replies.Pushes current state @120Hz
-#define SWITCH_PRO_INPUT_ID_NFC_MCU 0x31       // Pushes large packets with standard input report + NFC/IR MCU data input report.
-#define SWITCH_PRO_INPUT_ID_UNKNOWN1 0x32      // Sends standard input reports.
-#define SWITCH_PRO_INPUT_ID_UNKNOWN2 0x33      // Sends standard input reports.
-#define SWITCH_PRO_INPUT_ID 0x3F
+#define SWITCH_PRO_BT_INPUT_ID_STD 0x21           // Standard input reports used for subcommand replies.
+#define SWITCH_PRO_BT_INPUT_ID_NFC_FW_UPDATE 0x23 // NFC/IR MCU FW update input report.
+#define SWITCH_PRO_BT_INPUT_ID_FULL 0x30          // input reports with IMU data instead of subcommand replies.Pushes current state @120Hz
+#define SWITCH_PRO_BT_INPUT_ID_NFC_MCU 0x31       // Pushes large packets with standard input report + NFC/IR MCU data input report.
+#define SWITCH_PRO_BT_INPUT_ID_UNKNOWN1 0x32      // Sends standard input reports.
+#define SWITCH_PRO_BT_INPUT_ID_UNKNOWN2 0x33      // Sends standard input reports.
+#define SWITCH_PRO_BT_INPUT_ID 0x3F
 
 /* HID output report id */
-#define SWITCH_PRO_OUTPUT_ID_RUMBLE_SUBCMD 0x01
-#define SWITCH_PRO_OUTPUT_ID_RUMBLE 0x10
-#define SWITCH_PRO_OUTPUT_ID_REQ_NFC_OR_RUMBLE 0x11
-#define SWITCH_PRO_OUTPUT_ID_UNKNOWN 0x12
+#define SWITCH_PRO_BT_OUTPUT_ID_RUMBLE_SUBCMD 0x01
+#define SWITCH_PRO_BT_OUTPUT_ID_RUMBLE 0x10
+#define SWITCH_PRO_BT_OUTPUT_ID_REQ_NFC_OR_RUMBLE 0x11
+#define SWITCH_PRO_BT_OUTPUT_ID_UNKNOWN 0x12
 
-#define SWITCH_PRO_INPUT_ID_SUBCOMMAND_REPLY 0x21
-#define SWITCH_PRO_INPUT_ID_FULL_CONTROLLER_STATE 0x30
-#define SWITCH_PRO_INPUT_ID_FULL_CONTROLLER_AND_MCU_STATE 0x31
-#define SWITCH_PRO_INPUT_ID_SIMPLE_CONTROLLER_STATE 0x3F
-#define SWITCH_PRO_INPUT_ID_COMMAND_ACK 0x81
+/* HID input report id */
+#define SWITCH_PRO_USB_INPUT_ID_SUBCOMMAND_REPLY 0x21
+#define SWITCH_PRO_USB_INPUT_ID_FULL_CONTROLLER_STATE 0x30
+#define SWITCH_PRO_USB_INPUT_ID_FULL_CONTROLLER_AND_MCU_STATE 0x31
+#define SWITCH_PRO_USB_INPUT_ID_SIMPLE_CONTROLLER_STATE 0x3F
+#define SWITCH_PRO_USB_INPUT_ID_COMMAND_ACK 0x81
 
-#define SWITCH_PRO_OUTPUT_ID_RUMBLE_AND_SUBCOMMAND 0x01
-#define SWITCH_PRO_OUTPUT_ID_RUMBLE 0x10
-#define SWITCH_PRO_OUTPUT_ID_PROPRIETARY 0x80
+/* HID output report id */
+#define SWITCH_PRO_USB_OUTPUT_ID_RUMBLE_AND_SUBCOMMAND 0x01
+#define SWITCH_PRO_USB_OUTPUT_ID_RUMBLE 0x10
+#define SWITCH_PRO_USB_OUTPUT_ID_PROPRIETARY 0x80
 
+/* HID report size */
+#define MaxInputReportSizeBytes 64
+#define SWITCH_PRO_USB_REPORT_SIZE 63
 #define SWITCH_PRO_USB_INPUT_REPORT_SIMPLE_SIZE 63
 #define SWITCH_PRO_USB_INPUT_REPORT_FULL_SIZE 63
 #define SWITCH_PRO_USB_INPUT_REPORT_STAND_SIZE 63
@@ -210,88 +216,88 @@
         0xC0                          /* End Collection */
 // 203 bytes
 
-#define SWITCH_PRO_BT_REPORT_MAP                                                                                                                 \
-    0x05, 0x01,                                       /* Usage Page (Generic Desktop Ctrls) */                                                   \
-        0x09, 0x05,                                   /* Usage (Game Pad) */                                                                     \
-        0xA1, 0x01,                                   /* Collection (Application) */                                                             \
-        0x06, 0x01, 0xFF,                             /*   Usage Page (Vendor Defined 0xFF01) */                                                 \
-        0x85, SWITCH_PRO_INPUT_ID_STD,                /*   Report ID (33) */                                                                     \
-        0x09, 0x21,                                   /*   Usage (0x21) */                                                                       \
-        0x75, 0x08,                                   /*   Report Size (8) */                                                                    \
-        0x95, 0x30,                                   /*   Report Count (48) */                                                                  \
-        0x81, 0x02,                                   /*   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position) */               \
-        0x85, SWITCH_PRO_INPUT_ID_FULL,               /*   Report ID (48) */                                                                     \
-        0x09, 0x30,                                   /*   Usage (0x30) */                                                                       \
-        0x75, 0x08,                                   /*   Report Size (8) */                                                                    \
-        0x95, 0x30,                                   /*   Report Count (48) */                                                                  \
-        0x81, 0x02,                                   /*   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position) */               \
-        0x85, SWITCH_PRO_INPUT_ID_NFC_MCU,            /*   Report ID (49) */                                                                     \
-        0x09, 0x31,                                   /*   Usage (0x31) */                                                                       \
-        0x75, 0x08,                                   /*   Report Size (8) */                                                                    \
-        0x96, 0x69, 0x01,                             /*   Report Count (361) */                                                                 \
-        0x81, 0x02,                                   /*   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position) */               \
-        0x85, SWITCH_PRO_INPUT_ID_UNKNOWN1,           /*   Report ID (50) */                                                                     \
-        0x09, 0x32,                                   /*   Usage (0x32) */                                                                       \
-        0x75, 0x08,                                   /*   Report Size (8) */                                                                    \
-        0x96, 0x69, 0x01,                             /*   Report Count (361) */                                                                 \
-        0x81, 0x02,                                   /*   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position) */               \
-        0x85, SWITCH_PRO_INPUT_ID_UNKNOWN2,           /*   Report ID (51) */                                                                     \
-        0x09, 0x33,                                   /*   Usage (0x33) */                                                                       \
-        0x75, 0x08,                                   /*   Report Size (8) */                                                                    \
-        0x96, 0x69, 0x01,                             /*   Report Count (361) */                                                                 \
-        0x81, 0x02,                                   /*   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position) */               \
-        0x85, SWITCH_PRO_INPUT_ID,                    /*   Report ID (63) */                                                                     \
-        0x05, 0x09,                                   /*   Usage Page (Button) */                                                                \
-        0x19, 0x01,                                   /*   Usage Minimum (0x01) */                                                               \
-        0x29, 0x10,                                   /*   Usage Maximum (0x10) */                                                               \
-        0x15, 0x00,                                   /*   Logical Minimum (0) */                                                                \
-        0x25, 0x01,                                   /*   Logical Maximum (1) */                                                                \
-        0x75, 0x01,                                   /*   Report Size (1) */                                                                    \
-        0x95, 0x10,                                   /*   Report Count (16) */                                                                  \
-        0x81, 0x02,                                   /*   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position) */               \
-        0x05, 0x01,                                   /*   Usage Page (Generic Desktop Ctrls) */                                                 \
-        0x09, 0x39,                                   /*   Usage (Hat switch) */                                                                 \
-        0x15, 0x00,                                   /*   Logical Minimum (0) */                                                                \
-        0x25, 0x07,                                   /*   Logical Maximum (7) */                                                                \
-        0x75, 0x04,                                   /*   Report Size (4) */                                                                    \
-        0x95, 0x01,                                   /*   Report Count (1) */                                                                   \
-        0x81, 0x42,                                   /*   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,Null State) */                     \
-        0x05, 0x09,                                   /*   Usage Page (Button) */                                                                \
-        0x75, 0x04,                                   /*   Report Size (4) */                                                                    \
-        0x95, 0x01,                                   /*   Report Count (1) */                                                                   \
-        0x81, 0x01,                                   /*   Input (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position) */            \
-        0x05, 0x01,                                   /*   Usage Page (Generic Desktop Ctrls) */                                                 \
-        0x09, 0x30,                                   /*   Usage (X) */                                                                          \
-        0x09, 0x31,                                   /*   Usage (Y) */                                                                          \
-        0x09, 0x33,                                   /*   Usage (Rx) */                                                                         \
-        0x09, 0x34,                                   /*   Usage (Ry) */                                                                         \
-        0x16, 0x00, 0x00,                             /*   Logical Minimum (0) */                                                                \
-        0x27, 0xFF, 0xFF, 0x00, 0x00,                 /*   Logical Maximum (65534) */                                                            \
-        0x75, 0x10,                                   /*   Report Size (16) */                                                                   \
-        0x95, 0x04,                                   /*   Report Count (4) */                                                                   \
-        0x81, 0x02,                                   /*   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position) */               \
-        0x06, 0x01, 0xFF,                             /*   Usage Page (Vendor Defined 0xFF01) */                                                 \
-        0x85, SWITCH_PRO_OUTPUT_ID_RUMBLE_SUBCMD,     /*   Report ID (1) */                                                                      \
-        0x09, 0x01,                                   /*   Usage (0x01) */                                                                       \
-        0x75, 0x08,                                   /*   Report Size (8) */                                                                    \
-        0x95, 0x30,                                   /*   Report Count (48) */                                                                  \
-        0x91, 0x02,                                   /*   Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile) */ \
-        0x85, SWITCH_PRO_OUTPUT_ID_RUMBLE,            /*   Report ID (16) */                                                                     \
-        0x09, 0x10,                                   /*   Usage (0x10) */                                                                       \
-        0x75, 0x08,                                   /*   Report Size (8) */                                                                    \
-        0x95, 0x30,                                   /*   Report Count (48) */                                                                  \
-        0x91, 0x02,                                   /*   Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile) */ \
-        0x85, SWITCH_PRO_OUTPUT_ID_REQ_NFC_OR_RUMBLE, /*   Report ID (17) */                                                                     \
-        0x09, 0x11,                                   /*   Usage (0x11) */                                                                       \
-        0x75, 0x08,                                   /*   Report Size (8) */                                                                    \
-        0x95, 0x30,                                   /*   Report Count (48) */                                                                  \
-        0x91, 0x02,                                   /*   Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile) */ \
-        0x85, SWITCH_PRO_OUTPUT_ID_UNKNOWN,           /*   Report ID (18) */                                                                     \
-        0x09, 0x12,                                   /*   Usage (0x12) */                                                                       \
-        0x75, 0x08,                                   /*   Report Size (8) */                                                                    \
-        0x95, 0x30,                                   /*   Report Count (48) */                                                                  \
-        0x91, 0x02,                                   /*   Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile) */ \
-        0xC0                                          /* End Collection */
+#define SWITCH_PRO_BT_REPORT_MAP                                                                                                                    \
+    0x05, 0x01,                                          /* Usage Page (Generic Desktop Ctrls) */                                                   \
+        0x09, 0x05,                                      /* Usage (Game Pad) */                                                                     \
+        0xA1, 0x01,                                      /* Collection (Application) */                                                             \
+        0x06, 0x01, 0xFF,                                /*   Usage Page (Vendor Defined 0xFF01) */                                                 \
+        0x85, SWITCH_PRO_BT_INPUT_ID_STD,                /*   Report ID (33) */                                                                     \
+        0x09, 0x21,                                      /*   Usage (0x21) */                                                                       \
+        0x75, 0x08,                                      /*   Report Size (8) */                                                                    \
+        0x95, 0x30,                                      /*   Report Count (48) */                                                                  \
+        0x81, 0x02,                                      /*   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position) */               \
+        0x85, SWITCH_PRO_BT_INPUT_ID_FULL,               /*   Report ID (48) */                                                                     \
+        0x09, 0x30,                                      /*   Usage (0x30) */                                                                       \
+        0x75, 0x08,                                      /*   Report Size (8) */                                                                    \
+        0x95, 0x30,                                      /*   Report Count (48) */                                                                  \
+        0x81, 0x02,                                      /*   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position) */               \
+        0x85, SWITCH_PRO_BT_INPUT_ID_NFC_MCU,            /*   Report ID (49) */                                                                     \
+        0x09, 0x31,                                      /*   Usage (0x31) */                                                                       \
+        0x75, 0x08,                                      /*   Report Size (8) */                                                                    \
+        0x96, 0x69, 0x01,                                /*   Report Count (361) */                                                                 \
+        0x81, 0x02,                                      /*   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position) */               \
+        0x85, SWITCH_PRO_BT_INPUT_ID_UNKNOWN1,           /*   Report ID (50) */                                                                     \
+        0x09, 0x32,                                      /*   Usage (0x32) */                                                                       \
+        0x75, 0x08,                                      /*   Report Size (8) */                                                                    \
+        0x96, 0x69, 0x01,                                /*   Report Count (361) */                                                                 \
+        0x81, 0x02,                                      /*   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position) */               \
+        0x85, SWITCH_PRO_BT_INPUT_ID_UNKNOWN2,           /*   Report ID (51) */                                                                     \
+        0x09, 0x33,                                      /*   Usage (0x33) */                                                                       \
+        0x75, 0x08,                                      /*   Report Size (8) */                                                                    \
+        0x96, 0x69, 0x01,                                /*   Report Count (361) */                                                                 \
+        0x81, 0x02,                                      /*   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position) */               \
+        0x85, SWITCH_PRO_BT_INPUT_ID,                    /*   Report ID (63) */                                                                     \
+        0x05, 0x09,                                      /*   Usage Page (Button) */                                                                \
+        0x19, 0x01,                                      /*   Usage Minimum (0x01) */                                                               \
+        0x29, 0x10,                                      /*   Usage Maximum (0x10) */                                                               \
+        0x15, 0x00,                                      /*   Logical Minimum (0) */                                                                \
+        0x25, 0x01,                                      /*   Logical Maximum (1) */                                                                \
+        0x75, 0x01,                                      /*   Report Size (1) */                                                                    \
+        0x95, 0x10,                                      /*   Report Count (16) */                                                                  \
+        0x81, 0x02,                                      /*   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position) */               \
+        0x05, 0x01,                                      /*   Usage Page (Generic Desktop Ctrls) */                                                 \
+        0x09, 0x39,                                      /*   Usage (Hat switch) */                                                                 \
+        0x15, 0x00,                                      /*   Logical Minimum (0) */                                                                \
+        0x25, 0x07,                                      /*   Logical Maximum (7) */                                                                \
+        0x75, 0x04,                                      /*   Report Size (4) */                                                                    \
+        0x95, 0x01,                                      /*   Report Count (1) */                                                                   \
+        0x81, 0x42,                                      /*   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,Null State) */                     \
+        0x05, 0x09,                                      /*   Usage Page (Button) */                                                                \
+        0x75, 0x04,                                      /*   Report Size (4) */                                                                    \
+        0x95, 0x01,                                      /*   Report Count (1) */                                                                   \
+        0x81, 0x01,                                      /*   Input (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position) */            \
+        0x05, 0x01,                                      /*   Usage Page (Generic Desktop Ctrls) */                                                 \
+        0x09, 0x30,                                      /*   Usage (X) */                                                                          \
+        0x09, 0x31,                                      /*   Usage (Y) */                                                                          \
+        0x09, 0x33,                                      /*   Usage (Rx) */                                                                         \
+        0x09, 0x34,                                      /*   Usage (Ry) */                                                                         \
+        0x16, 0x00, 0x00,                                /*   Logical Minimum (0) */                                                                \
+        0x27, 0xFF, 0xFF, 0x00, 0x00,                    /*   Logical Maximum (65534) */                                                            \
+        0x75, 0x10,                                      /*   Report Size (16) */                                                                   \
+        0x95, 0x04,                                      /*   Report Count (4) */                                                                   \
+        0x81, 0x02,                                      /*   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position) */               \
+        0x06, 0x01, 0xFF,                                /*   Usage Page (Vendor Defined 0xFF01) */                                                 \
+        0x85, SWITCH_PRO_BT_OUTPUT_ID_RUMBLE_SUBCMD,     /*   Report ID (1) */                                                                      \
+        0x09, 0x01,                                      /*   Usage (0x01) */                                                                       \
+        0x75, 0x08,                                      /*   Report Size (8) */                                                                    \
+        0x95, 0x30,                                      /*   Report Count (48) */                                                                  \
+        0x91, 0x02,                                      /*   Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile) */ \
+        0x85, SWITCH_PRO_BT_OUTPUT_ID_RUMBLE,            /*   Report ID (16) */                                                                     \
+        0x09, 0x10,                                      /*   Usage (0x10) */                                                                       \
+        0x75, 0x08,                                      /*   Report Size (8) */                                                                    \
+        0x95, 0x30,                                      /*   Report Count (48) */                                                                  \
+        0x91, 0x02,                                      /*   Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile) */ \
+        0x85, SWITCH_PRO_BT_OUTPUT_ID_REQ_NFC_OR_RUMBLE, /*   Report ID (17) */                                                                     \
+        0x09, 0x11,                                      /*   Usage (0x11) */                                                                       \
+        0x75, 0x08,                                      /*   Report Size (8) */                                                                    \
+        0x95, 0x30,                                      /*   Report Count (48) */                                                                  \
+        0x91, 0x02,                                      /*   Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile) */ \
+        0x85, SWITCH_PRO_BT_OUTPUT_ID_UNKNOWN,           /*   Report ID (18) */                                                                     \
+        0x09, 0x12,                                      /*   Usage (0x12) */                                                                       \
+        0x75, 0x08,                                      /*   Report Size (8) */                                                                    \
+        0x95, 0x30,                                      /*   Report Count (48) */                                                                  \
+        0x91, 0x02,                                      /*   Output (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position,Non-volatile) */ \
+        0xC0                                             /* End Collection */
 
 enum SwitchPro_Direction
 {
@@ -331,7 +337,7 @@ typedef struct
     uint16_t Y;  // Usage 0x00010031: Y, Value = 0 to 65535
     uint16_t Z;  // Usage 0x00010032: Z, Value = 0 to 65535
     uint16_t Rz; // Usage 0x00010035: Rz, Value = 0 to 65535
-} switchProInputReport63_t;
+} switchProBtInputReport63_t;
 
 typedef struct
 {
@@ -365,49 +371,62 @@ typedef struct
     uint8_t Button17 : 1;                   // Usage 0x00090011: Button 17, Value = 0 to 1, Physical = Value x 315 in degrees
     uint8_t Button18 : 1;                   // Usage 0x00090012: Button 18, Value = 0 to 1, Physical = Value x 315 in degrees
     uint8_t pad_7[52];                      // Pad
-} switchProInputReport30_t;
+} switchProUsbInputReport30_t;
 
 typedef struct
 {
     uint8_t reportId;             // Report ID = 0x21 (33)
                                   // Collection: CA:Joystick
     uint8_t VEN_Joystick0001[63]; // Usage 0xFF000001: , Value = 0 to 1, Physical = Value x 315 in degrees
-} switchProInputReport21_t;
+} switchProUsbInputReport21_t;
 
 typedef struct
 {
     uint8_t reportId;             // Report ID = 0x81 (129)
                                   // Collection: CA:Joystick
     uint8_t VEN_Joystick0002[63]; // Usage 0xFF000002: , Value = 0 to 1, Physical = Value x 315 in degrees
-} switchProInputReport81_t;
+} switchProUsbInputReport81_t;
 
 typedef struct
 {
     uint8_t reportId;             // Report ID = 0x01 (1)
                                   // Collection: CA:Joystick
     uint8_t VEN_Joystick0003[63]; // Usage 0xFF000003: , Value = 0 to 1, Physical = Value x 315 in degrees
-} switchProOutputReport01_t;
+} switchProUsbOutputReport01_t;
 
 typedef struct
 {
     uint8_t reportId;             // Report ID = 0x10 (16)
                                   // Collection: CA:Joystick
     uint8_t VEN_Joystick0004[63]; // Usage 0xFF000004: , Value = 0 to 1, Physical = Value x 315 in degrees
-} switchProOutputReport10_t;
+} switchProUsbOutputReport10_t;
 
 typedef struct
 {
     uint8_t reportId;             // Report ID = 0x80 (128)
                                   // Collection: CA:Joystick
     uint8_t VEN_Joystick0005[63]; // Usage 0xFF000005: , Value = 0 to 1, Physical = Value x 315 in degrees
-} switchProOutputReport80_t;
+} switchProUsbOutputReport80_t;
 
 typedef struct
 {
     uint8_t reportId;             // Report ID = 0x82 (130)
                                   // Collection: CA:Joystick
     uint8_t VEN_Joystick0006[63]; // Usage 0xFF000006: , Value = 0 to 1, Physical = Value x 315 in degrees
-} switchProOutputReport82_t;
+} switchProUsbOutputReport82_t;
+
+/* ------------------------------ */
+/* ------------------------------ */
+/* ------------------------------ */
+/* ------------------------------ */
+/* ------------------------------ */
+/* Bluetooth: */
+/* ------------------------------ */
+/* ------------------------------ */
+/* ------------------------------ */
+/* ------------------------------ */
+/* ------------------------------ */
+/* ------------------------------ */
 
 /* input */
 #define INPUT_REPORT_STAND_SIZE 64
@@ -523,7 +542,7 @@ typedef struct ControllerState
     battery_t battery : 4;
 } controller_state_t;
 
-typedef struct ControllerData
+typedef struct // ControllerData
 {
     button_t button;
     stick_t left_stick;
@@ -990,5 +1009,31 @@ typedef struct RumbleDataF
     float freq_l_amp;
 } rumble_data_f_t;
 
+/* ------------------------------ */
+/* ------------------------------ */
+/* ------------------------------ */
+/* ------------------------------ */
+/* ------------------------------ */
+/* USB: */
+/* ------------------------------ */
+/* ------------------------------ */
+/* ------------------------------ */
+/* ------------------------------ */
+/* ------------------------------ */
+/* ------------------------------ */
+
+typedef struct SwitchProUsb SwitchProUsb;
+struct SwitchProUsb
+{
+    void (*do_work)(SwitchProUsb *self, uint8_t *hid_rx_buffer, uint8_t len);
+    void (*handle_input_0x30)(SwitchProUsb *self);
+    input_report_t gamepad_data;
+    uint8_t hid_report_buffer[0x40];
+    bool hid_report_open;
+    uint8_t joyStickMode;
+};
+
+SwitchProUsb SwitchProUsb_();
+void hid_switch_pro_report(uint8_t *hid_rx_buffer, uint8_t len);
 // 0.0~1.0
 float calcRumbleAmp(const rumble_data_t *rumble);

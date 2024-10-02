@@ -1,3 +1,6 @@
+#ifndef XBOX1797_H
+#define XBOX1797_H
+
 #pragma once
 
 #include <stdint.h>
@@ -678,3 +681,5 @@ typedef struct
     uint8_t pad_2;                               // Pad
     uint8_t Keyboard[6];                         // Value = 0 to 101
 } xbox1797BtInputReport05_t;
+
+#endif

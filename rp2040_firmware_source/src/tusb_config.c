@@ -31,7 +31,6 @@ static const char *const descriptor_string_123[] = {
 
 static const char *const descriptor_string_switch_pro[] = {
     SWITCH_PRO_STRING_DESCRIPTOR,
-    STRING_HID,
     STRING_WEBUSB,
 };
 
@@ -43,13 +42,11 @@ static const char *const descriptor_string_xbox1914[] = {
 
 static const char *const descriptor_string_dual_shock_4[] = {
     DUAL_SHOCK_4_STRING_DESCRIPTOR,
-    STRING_HID,
     STRING_WEBUSB,
 };
 
 static const char *const descriptor_string_dual_sense[] = {
     DUAL_SENSE_STRING_DESCRIPTOR,
-    STRING_HID,
     STRING_WEBUSB,
 };
 
@@ -75,9 +72,9 @@ uint8_t const descriptor_report_switch_pro[] = {
 };
 
 uint8_t const descriptor_report_xbox1914[] = {
-    // KEYBRD_REPORT_MAP_COMPATIBLE,
-    // CUSTOM_MOUSE_REPORT_MAP,
-    // XBOX_1914_REPORT_MAP,
+    KEYBRD_REPORT_MAP_COMPATIBLE,
+    CUSTOM_MOUSE_REPORT_MAP,
+    // XBOX_1914_BT_REPORT_MAP,
 };
 
 uint8_t const descriptor_report_dual_shock_4[] = {
@@ -124,11 +121,22 @@ uint8_t descriptor_configuration_xbox1914[] = {
     // DESCRIPTOR_INTERFACE_WEBUSB,
     XBOX_1914_CONFIGURATION_DESCRIPTOR,
     XBOX_1914_INTERFACE_DESCRIPTOR_0_0,
+    XBOX_1914_ENDPOINT_DESCRIPTOR_0_0_OUT2,
+    XBOX_1914_ENDPOINT_DESCRIPTOR_0_0_IN2,
+
     XBOX_1914_INTERFACE_DESCRIPTOR_0_1,
+    XBOX_1914_ENDPOINT_DESCRIPTOR_0_1_OUT2,
+    XBOX_1914_ENDPOINT_DESCRIPTOR_0_1_IN2,
+
     XBOX_1914_INTERFACE_DESCRIPTOR_1_0,
     XBOX_1914_INTERFACE_DESCRIPTOR_1_1,
+    XBOX_1914_ENDPOINT_DESCRIPTOR_1_1_OUT3,
+    XBOX_1914_ENDPOINT_DESCRIPTOR_1_1_IN3,
+
     XBOX_1914_INTERFACE_DESCRIPTOR_2_0,
     XBOX_1914_INTERFACE_DESCRIPTOR_2_1,
+    XBOX_1914_ENDPOINT_DESCRIPTOR_2_1_OUT4,
+    XBOX_1914_ENDPOINT_DESCRIPTOR_2_1_IN4,
 };
 
 uint8_t descriptor_configuration_dual_shock_4[] = {
@@ -338,7 +346,7 @@ const bool tud_vendor_control_xfer_cb(
     {
         if (request->bRequest == MS_OS_VENDOR)
         {
-            if (config_get_protocol() == PROTOCOL_XUSB_WIN /* || config_get_protocol() == PROTOCOL_XBOX_1914 */)
+            if (config_get_protocol() == PROTOCOL_XUSB_WIN)
             {
                 static uint8_t response[] = {MS_OS_COMPATIDS_ALL};
                 return tud_control_xfer(rhport, request, response, sizeof(response));
@@ -349,25 +357,26 @@ const bool tud_vendor_control_xfer_cb(
                 return tud_control_xfer(rhport, request, response, sizeof(response));
             }
         }
-        if (request->bRequest == XBOX_1914_OS_VENDOR)
-        {
-            if (config_get_protocol() == PROTOCOL_XBOX_1914)
-            {
-                static uint8_t response[] = {
-                    MS_OS_COMPATIDS(40, 1),
-                    MS_OS_COMPATIDS_XUSB(XBOX_1914_ITF_0),
-                    // MS_OS_COMPATIDS_XUSB(XBOX_1914_ITF_1),
-                    // MS_OS_COMPATIDS_XUSB(XBOX_1914_ITF_2),
-                };
-                return tud_control_xfer(rhport, request, response, sizeof(response));
-            }
-        }
+        // if (request->bRequest == XBOX_1914_OS_VENDOR)
+        // {
+        //     if (config_get_protocol() == PROTOCOL_XBOX_1914)
+        //     {
+        //         static uint8_t response[] = {
+        //             MS_OS_COMPATIDS(40, 1),
+        //             MS_OS_COMPATIDS_XUSB(XBOX_1914_ITF_0),
+        //             // MS_OS_COMPATIDS_XUSB(XBOX_1914_ITF_1),
+        //             // MS_OS_COMPATIDS_XUSB(XBOX_1914_ITF_2),
+        //         };
+        //         return tud_control_xfer(rhport, request, response, sizeof(response));
+        //     }
+        // }
     }
     // Extended properties.
     if (
         request->wIndex == 0x0005 &&
-        request->bRequest == MS_OS_VENDOR &&
-        config_get_protocol() != PROTOCOL_XUSB_UNIX)
+        request->bRequest == MS_OS_VENDOR /* &&
+        config_get_protocol() != PROTOCOL_XUSB_UNIX */
+    )
     {
         if (config_get_protocol() == PROTOCOL_XUSB_WIN || config_get_protocol() == PROTOCOL_GENERIC)
         {
@@ -386,7 +395,8 @@ uint16_t tud_hid_get_report_cb(
     uint8_t *buffer,
     uint16_t reqlen)
 {
-    // if (config_get_protocol() == PROTOCOL_SWITCH_PRO) {
+    // if (config_get_protocol() == PROTOCOL_SWITCH_PRO)
+    // {
     //     output_report_t *output_report = (output_report_t *)buffer;
     //     output_report.subcmdReply = 0x80;
     //     output_report.subcmdReplyID = subcmdPacket->subcmd;
@@ -421,7 +431,16 @@ void tud_hid_set_report_cb(
     uint8_t report_id,
     hid_report_type_t report_type,
     uint8_t const *buffer,
-    uint16_t bufsize) {}
+    uint16_t bufsize)
+{
+    if (config_get_protocol() == PROTOCOL_SWITCH_PRO)
+    {
+        uint8_t hid_rx_buffer[64] = {0};
+        hid_rx_buffer[0] = report_id;
+        memcpy(&hid_rx_buffer[1], buffer, bufsize);
+        hid_switch_pro_report(hid_rx_buffer, bufsize);
+    }
+}
 
 void tud_mount_cb(void)
 {

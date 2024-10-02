@@ -1,3 +1,6 @@
+#ifndef XBOX1708_H
+#define XBOX1708_H
+
 #pragma once
 
 #include <stdint.h>
@@ -188,7 +191,7 @@ enum Xbox1708_Direction
 
 typedef struct
 {
-    // uint8_t reportId;                     // Report ID = 0x01 (1)
+    uint8_t reportId; // Report ID = 0x01 (1)
     // Collection: CA:GamePad CP:Pointer
     uint16_t X;                            // Usage 0x00010030: X, Value = 0 to 65535
     uint16_t Y;                            // Usage 0x00010031: Y, Value = 0 to 65535
@@ -223,7 +226,7 @@ typedef struct
 
 typedef struct
 {
-    // uint8_t reportId;                            // Report ID = 0x02 (2)
+    uint8_t reportId; // Report ID = 0x02 (2)
     // Collection: CA:GamePad CA:ConsumerControl
     uint8_t CD_GamePadConsumerControlAcHome : 1; // Usage 0x000C0223: AC Home, Value = 0 to 1
     uint8_t : 7;                                 // Pad
@@ -231,14 +234,14 @@ typedef struct
 
 typedef struct
 {
-    // uint8_t reportId;                   // Report ID = 0x04 (4)
+    uint8_t reportId; // Report ID = 0x04 (4)
     // Collection: CA:GamePad
     uint8_t GDC_GamePadBatteryStrength; // Usage 0x00060020: Battery Strength, Value = 0 to 255
 } xbox1708BtInputReport04_t;
 
 typedef struct
 {
-    // uint8_t reportId;                                        // Report ID = 0x03 (3)
+    uint8_t reportId; // Report ID = 0x03 (3)
     // Collection: CA:GamePad CL:SetEffectReport
     uint8_t PID_GamePadSetEffectReportDcEnableActuators : 4; // Usage 0x000F0097: DC Enable Actuators, Value = 0 to 1
     uint8_t : 4;                                             // Pad
@@ -247,3 +250,5 @@ typedef struct
     uint8_t PID_GamePadSetEffectReportStartDelay;            // Usage 0x000F00A7: Start Delay, Value = 0 to 255, Physical = Value in 10⁻² s units
     uint8_t PID_GamePadSetEffectReportLoopCount;             // Usage 0x000F007C: Loop Count, Value = 0 to 255
 } xbox1708BtOutputReport03_t;
+
+#endif

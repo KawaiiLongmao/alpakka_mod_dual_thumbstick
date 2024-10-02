@@ -1,5 +1,6 @@
 #include <stdint.h>
 
+// 返回长度
 uint16_t memory_copy(void *dest, const void *src, const uint16_t size)
 {
     uint8_t *_dest = (uint8_t *)dest;

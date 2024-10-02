@@ -36,13 +36,12 @@
 
 // [Microsoft Corp.] Xbox Series X Controller (model 1914)
 // Share button valid
-#define XBOX_SERIES_X_PID 0x0B13
+#define XBOX_SERIES_X_PID_USB 0x0B12
+#define XBOX_SERIES_X_PID_BT 0x0B13
 #define XBOX_SERIES_X_BCD_DEVICE 0x0509
 
 // [Sony Corp.]
 #define SONY_VID 0x054C
-#define DS_MANUFACTURER "Sony Interactive Entertainment"
-#define DS_PRODUCT "Wireless Controller"
 
 // [Sony Corp.] DualShock 3 / PlayStation 3 Controller
 #define DUAL_SHOCK_3_PID 0x0268
@@ -96,38 +95,31 @@
 //--------------------------------------------------------------------+
 
 // Length of template descriptor: 25 bytes
-#define TUD_HID_DESC_LEN    (9 + 9 + 7)
+#define TUD_HID_DESC_LEN (9 + 9 + 7)
 
 // HID Input only descriptor
 // Interface number, string index, protocol, report descriptor len, EP In address, size & polling interval
-#define TUD_HID_DESCRIPTOR_T(_itfnum, _stridx, _boot_protocol, _report_desc_len, _epin, _epsize, _ep_interval) \
-  /* Interface */\
-  9, TUSB_DESC_INTERFACE, _itfnum, 0, 1, TUSB_CLASS_HID, (uint8_t)((_boot_protocol) ? (uint8_t)HID_SUBCLASS_BOOT : 0), _boot_protocol, _stridx,\
-  /* HID descriptor */\
-  9, HID_DESC_TYPE_HID, UINT16_TO_BYTE(0x0111), 0, 1, HID_DESC_TYPE_REPORT, UINT16_TO_BYTE(_report_desc_len),\
-  /* Endpoint In */\
-  7, TUSB_DESC_ENDPOINT, _epin, TUSB_XFER_INTERRUPT, UINT16_TO_BYTE(_epsize), _ep_interval
+#define TUD_HID_DESCRIPTOR_T(_itfnum, _stridx, _boot_protocol, _report_desc_len, _epin, _epsize, _ep_interval)                                                       \
+  /* Interface */                                                                                                                                                    \
+  9, TUSB_DESC_INTERFACE, _itfnum, 0, 1, TUSB_CLASS_HID, (uint8_t)((_boot_protocol) ? (uint8_t)HID_SUBCLASS_BOOT : 0), _boot_protocol, _stridx, /* HID descriptor */ \
+      9, HID_DESC_TYPE_HID, UINT16_TO_BYTE(0x0111), 0, 1, HID_DESC_TYPE_REPORT, UINT16_TO_BYTE(_report_desc_len),                               /* Endpoint In */    \
+      7, TUSB_DESC_ENDPOINT, _epin, TUSB_XFER_INTERRUPT, UINT16_TO_BYTE(_epsize), _ep_interval
 
 // Length of template descriptor: 32 bytes
-#define TUD_HID_INOUT_DESC_LEN    (9 + 9 + 7 + 7)
+#define TUD_HID_INOUT_DESC_LEN (9 + 9 + 7 + 7)
 
 // HID Input & Output descriptor
 // Interface number, string index, protocol, report descriptor len, EP OUT & IN address, size & polling interval
-#define TUD_HID_INOUT_DESCRIPTOR_T(_itfnum, _stridx, _boot_protocol, _report_desc_len, _epout, _epin, _epsize, _ep_interval) \
-  /* Interface */\
-  9, TUSB_DESC_INTERFACE, _itfnum, 0, 2, TUSB_CLASS_HID, (uint8_t)((_boot_protocol) ? (uint8_t)HID_SUBCLASS_BOOT : 0), _boot_protocol, _stridx,\
-  /* HID descriptor */\
-  9, HID_DESC_TYPE_HID, U16_TO_U8S_LE(0x0111), 0, 1, HID_DESC_TYPE_REPORT, U16_TO_U8S_LE(_report_desc_len),\
-  /* Endpoint Out */\
-  7, TUSB_DESC_ENDPOINT, _epout, TUSB_XFER_INTERRUPT, U16_TO_U8S_LE(_epsize), _ep_interval, \
-  /* Endpoint In */\
-  7, TUSB_DESC_ENDPOINT, _epin, TUSB_XFER_INTERRUPT, U16_TO_U8S_LE(_epsize), _ep_interval
+#define TUD_HID_INOUT_DESCRIPTOR_T(_itfnum, _stridx, _boot_protocol, _report_desc_len, _epout, _epin, _epsize, _ep_interval)                                         \
+  /* Interface */                                                                                                                                                    \
+  9, TUSB_DESC_INTERFACE, _itfnum, 0, 2, TUSB_CLASS_HID, (uint8_t)((_boot_protocol) ? (uint8_t)HID_SUBCLASS_BOOT : 0), _boot_protocol, _stridx, /* HID descriptor */ \
+      9, HID_DESC_TYPE_HID, U16_TO_U8S_LE(0x0111), 0, 1, HID_DESC_TYPE_REPORT, U16_TO_U8S_LE(_report_desc_len),                                 /* Endpoint Out */   \
+      7, TUSB_DESC_ENDPOINT, _epout, TUSB_XFER_INTERRUPT, U16_TO_U8S_LE(_epsize), _ep_interval,                                                 /* Endpoint In */    \
+      7, TUSB_DESC_ENDPOINT, _epin, TUSB_XFER_INTERRUPT, U16_TO_U8S_LE(_epsize), _ep_interval
 
 // Interface number, string index, EP Out & IN address, EP size
-#define TUD_VENDOR_DESCRIPTOR_T(_itfnum, _stridx, _epout, _epin, _epsize) \
-  /* Interface */\
-  9, TUSB_DESC_INTERFACE, _itfnum, 0, 2, TUSB_CLASS_VENDOR_SPECIFIC, 0x00, 0x00, _stridx,\
-  /* Endpoint Out */\
-  7, TUSB_DESC_ENDPOINT, _epout, TUSB_XFER_BULK, UINT16_TO_BYTE(_epsize), 0,\
-  /* Endpoint In */\
-  7, TUSB_DESC_ENDPOINT, _epin, TUSB_XFER_BULK, UINT16_TO_BYTE(_epsize), 0
+#define TUD_VENDOR_DESCRIPTOR_T(_itfnum, _stridx, _epout, _epin, _epsize)                                    \
+  /* Interface */                                                                                            \
+  9, TUSB_DESC_INTERFACE, _itfnum, 0, 2, TUSB_CLASS_VENDOR_SPECIFIC, 0x00, 0x00, _stridx, /* Endpoint Out */ \
+      7, TUSB_DESC_ENDPOINT, _epout, TUSB_XFER_BULK, UINT16_TO_BYTE(_epsize), 0,          /* Endpoint In */  \
+      7, TUSB_DESC_ENDPOINT, _epin, TUSB_XFER_BULK, UINT16_TO_BYTE(_epsize), 0

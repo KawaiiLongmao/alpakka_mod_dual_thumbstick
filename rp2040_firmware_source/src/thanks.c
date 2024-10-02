@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-2.0-only
 // Copyright (C) 2022, Input Labs Oy.
 
-// A not-so-secret easter egg.
-// This could just be a JSON or YAML file later.
+#include <stdint.h>
 
+// A not-so-secret easter egg.
 // You make this possible, thanks.
-uint8_t thanks_len = 9;
-uint8_t thanks_list[9][24] = {
+uint8_t thanks_len = 10;
+uint8_t thanks_list[10][24] = {
     {19, 28, 14, 8, 8, 0},
     {18, 6, 11, 12, 8, 9, 0},
     {4, 21, 23, 8, 17, 10, 12, 17, 8, 8, 21, 0},
@@ -16,4 +16,4 @@ uint8_t thanks_list[9][24] = {
     {7, 8, 17, 17, 12, 22, 44, 23, 11, 8, 44, 16, 8, 17, 4, 6, 8, 0},
     {7, 8, 17, 10, 29, 18, 0},
     {13, 4, 5, 8, 10, 15, 18, 26, 0},
-};
+    {5, 8, 23, 23, 4, 6, 18, 21, 8}};

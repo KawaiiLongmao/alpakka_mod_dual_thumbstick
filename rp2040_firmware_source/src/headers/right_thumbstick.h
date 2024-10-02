@@ -3,8 +3,15 @@
 
 #pragma once
 
-typedef struct RThumbstick_struct RThumbstick;
+enum RESPONSE_CURVE
+{
+    LINEAR = 1,
+    TRADITIONAL_CURVE,
+    CONSTANT,
+    ONCE,
+};
 
+typedef struct RThumbstick_struct RThumbstick;
 struct RThumbstick_struct
 {
     void (*report)(RThumbstick *self);
@@ -20,8 +27,8 @@ struct RThumbstick_struct
     Button down_left;
     Button down_right;
 
-    ThumbstickMode mode;
-    ThumbstickDistance distance_mode;
+    // ThumbstickMode mode;
+    // ThumbstickDistance distance_mode;
     bool deadzone_override;
     float deadzone;
     float antideadzone;
