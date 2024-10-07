@@ -344,13 +344,13 @@ void config_tune_update_leds()
         if (config_cache.sens_touch == 0)
             led_blink_mask(LED_DOWN);
         if (config_cache.sens_touch == 1)
-            led_blink_mask(LED_DOWN + LED_LEFT);
-        if (config_cache.sens_touch == 2)
             led_blink_mask(LED_LEFT);
-        if (config_cache.sens_touch == 3)
-            led_blink_mask(LED_LEFT + LED_UP);
-        if (config_cache.sens_touch == 4)
+        if (config_cache.sens_touch == 2)
             led_blink_mask(LED_UP);
+        if (config_cache.sens_touch == 3)
+            led_blink_mask(LED_LEFT + LED_DOWN);
+        if (config_cache.sens_touch == 4)
+            led_blink_mask(LED_LEFT + LED_UP);
         led_set_mode(LED_MODE_BLINK);
     }
 }
@@ -588,41 +588,47 @@ void config_set_deadzone_values(float *values)
     config_cache_synced = false;
 }
 
-void config_set_log_level(LogLevel log_level) {
+void config_set_log_level(LogLevel log_level)
+{
     info("Config: log_level=%i\n", log_level);
     config_cache.log_level = log_level;
     config_cache_synced = false;
 }
 
-void config_set_log_mask(LogMask log_mask) {
+void config_set_log_mask(LogMask log_mask)
+{
     info("Config: log_mask=%i\n", log_mask);
     config_cache.log_mask = log_mask;
     config_cache_synced = false;
 }
 
-void config_set_long_calibration(bool value) {
+void config_set_long_calibration(bool value)
+{
     info("Config: long_calibration=%i\n", value);
     config_cache.long_calibration = value;
     config_cache_synced = false;
 }
 
-void config_set_swap_gyros(bool value) {
+void config_set_swap_gyros(bool value)
+{
     info("Config: swap_gyros=%i\n", value);
     config_cache.swap_gyros = value;
     config_cache_synced = false;
     imu_init();
 }
 
-void config_set_touch_invert_polarity(bool value) {
+void config_set_touch_invert_polarity(bool value)
+{
     info("Config: touch_invert_polarity=%i\n", value);
     config_cache.touch_invert_polarity = value;
     config_cache_synced = false;
     touch_load_from_config();
 }
 
-void config_set_gyro_user_offset(int8_t x, int8_t y, int8_t z) {
+void config_set_gyro_user_offset(int8_t x, int8_t y, int8_t z)
+{
     float f = 0.01;
-    info("Config: offset_gyro_user x=%.2f y=%.2f z=%.2f\n", x*f, y*f, z*f);
+    info("Config: offset_gyro_user x=%.2f y=%.2f z=%.2f\n", x * f, y * f, z * f);
     config_cache.offset_gyro_user_x = x;
     config_cache.offset_gyro_user_y = y;
     config_cache.offset_gyro_user_z = z;
@@ -657,8 +663,10 @@ bool config_problems_are_pending()
     return problem_calibration || problem_gyro;
 }
 
-void config_alert_if_not_calibrated() {
-    if (config_cache.offset_ts_x == 0 && config_cache.offset_ts_y == 0) {
+void config_alert_if_not_calibrated()
+{
+    if (config_cache.offset_ts_x == 0 && config_cache.offset_ts_y == 0)
+    {
         warn("The controller is not calibrated\n");
         warn("Please run calibration\n");
         config_set_problem_calibration(true);

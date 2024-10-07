@@ -6,6 +6,8 @@
 #include <pico/multicore.h>
 #include <pico/time.h>
 #include <tusb.h>
+#include "hardware/vreg.h"
+#include "hardware/clocks.h"
 #include "config.h"
 #include "tusb_config.h"
 #include "led.h"
@@ -24,6 +26,9 @@
 #define VERSION "undefined"
 #endif
 
+#define SYS_CLOCK_MHZ 48
+#define PLL_SYS_KHZ (SYS_CLOCK_MHZ * 1000)
+
 void title()
 {
     info("╔====================╗\n");
@@ -33,20 +38,30 @@ void title()
     info("Firmware version: %s\n", VERSION);
 }
 
+void sys_clock_reset()
+{
+    if (SYS_CLOCK_MHZ > 270)
+        vreg_set_voltage(VREG_VOLTAGE_1_30); // 300MHz需要调压，如果270MHz不需要加这句
+    if (SYS_CLOCK_MHZ != 48)
+        set_sys_clock_khz(PLL_SYS_KHZ, true);
+}
+
 void main_init()
 {
     // config_write_init();
     // LED feedback ASAP after booting.
     led_init();
     // Init stdio and logging.
-// #if SINGLE_THUMBSTICK
-//     stdio_uart_init();
-// #endif
+    // #if SINGLE_THUMBSTICK
+    //     stdio_uart_init();
+    // #endif
     stdio_init_all();
     logging_init();
     // Load config.
     title();
     config_init();
+    // reset core frequency.
+    sys_clock_reset();
     // Init USB.
     tusb_init();
     wait_for_usb_init();

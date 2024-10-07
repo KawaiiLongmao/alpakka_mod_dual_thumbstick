@@ -33,7 +33,6 @@ Button daisy_y;
 
 float thumbstick_adc(uint8_t adc_index, float offset)
 {
-    // return 1;
     adc_select_input(adc_index);
     float value = (float)adc_read() - BIT_11;
     value = value / BIT_11 * CFG_THUMBSTICK_SATURATION;

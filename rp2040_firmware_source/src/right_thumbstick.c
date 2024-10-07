@@ -35,48 +35,6 @@ float right_thumbstick_adc(uint8_t adc_index, float offset)
     float value = (float)adc_read() - BIT_11;
     value = value / BIT_11 * CFG_THUMBSTICK_SATURATION;
     return constrain(value - offset, -1, 1);
-
-    // static uint8_t x=20;
-    // static uint8_t y=20;
-    // static uint32_t t=0;
-    // static uint8_t b=1;
-    // float r=0;
-    // if(t < 250*5)
-    // {
-    //     t++;
-    // }
-    // else
-    // {
-    //     if(b == 1)
-    //     {
-    //         x--;
-    //         if(x == 0) b=2;
-    //     }
-    //     else if(b == 2)
-    //     {
-    //         y--;
-    //         if(y == 0) b=3;
-    //     }
-    //     else if(b == 3)
-    //     {
-    //         x++;
-    //         if(x == 20) b=4;
-    //     }
-    //     else if(b == 4)
-    //     {
-    //         y++;
-    //         if(y == 20) b=1;
-    //     }
-    //     if(adc_index == rts_x_adc_channel)
-    //     {
-    //         r = (x-10)/10.0f;
-    //     }
-    //     else if(adc_index == rts_y_adc_channel)
-    //     {
-    //         r = (y-10)/10.0f;
-    //     }
-    // }
-    // return constrain(r, -1, 1);
 }
 
 void right_thumbstick_update_offsets()
@@ -159,11 +117,11 @@ void right_thumbstick_report_mouse_move(uint8_t action, float thumbstick_value, 
     }
     else if (response_curve == TRADITIONAL_CURVE)
     {
-        mouse_move_value = pow(1 + sensitivity_level / 10.0, thumbstick_value * 7);
+        mouse_move_value = pow(1.1 + sensitivity_level / 10.0, thumbstick_value * 7);
     }
     else if (response_curve == CONSTANT)
     {
-        if (thumbstick_value > 0)
+        if (thumbstick_value > 0.1)
             mouse_move_value = sensitivity_level;
     }
     // else if (response_curve == ONCE)

@@ -1,43 +1,42 @@
-# Alpakka Firmware
+![输入图片说明](9CD299E22F9695DF4A949617941C84C4.png)
 
-*Alpakka controller reference firmware (for Raspberry Pi Pico)*
-## Project links
-- [Alpakka Manual](https://inputlabs.io/devices/alpakka/manual).
-- [Alpakka Firmware](https://github.com/inputlabs/alpakka_firmware). _(you are here)_
-- [Alpakka PCB](https://github.com/inputlabs/alpakka_pcb).
-- [Alpakka 3D-print](https://github.com/inputlabs/alpakka_case).
-- [Input Labs Roadmap](https://github.com/orgs/inputlabs/projects/2/views/2).
+右摇杆映射鼠标：左上设置按键1代表线性模式，2曲线，3恒定。左下代表水平灵敏度，右下代表纵向灵敏度，可设置1~10。
 
-## Supported developer operative systems
-- GNU/Linux (and MacOS) - See [Development in Linux](https://inputlabs.io/devices/alpakka/manual/dev_unix).
-- Windows - See [Development in Windows](https://inputlabs.io/devices/alpakka/manual/dev_windows).
+![输入图片说明](78ECAD77CCC95F3D296168CCA2C4335D.png)
 
-## System dependencies
-With `apt`, `rpm`, `pacman`, `brew`, or the equivalent package manager of your system, install:
-- **gcc**
-- **git**
-- **cmake**
+![输入图片说明](CF0153323AF69AA8130AA56D518DE0BC.png)
 
-## Project dependencies
-- `make install`: Download and configure dependencies automatically.
+只要这两个设置了并且做开启陀螺仪的动作。ds手柄模式就可以报告陀螺仪数据了。
 
-## Development commands
-- `make`: Build compilation environment and build executables.
-- `make rebuild`: Build executables again using cache (faster).
-- `make load`: Load built .uf2 file into the Pico (requires bootsel mode or active session).
-- `make reload`: Do both `rebuild` and `load` commands (for dev convenience).
-- `make clean`: Delete previous build files.
-- `make session`: Connect to UART serial stdio, and display controller log.
+初版：
 
-While having an active session:
-- `make restart`: Restart the controller.
-- `make bootsel`: Put the controller in bootsel mode.
-- `make calibrate`: Calibrate thumbstick and IMUs.
-- `make format`: Format NVM sector and reset to initial values.
-- `make test`: Start a semi-manual testing procedure for the buttons and axis.
+GP20(Home)->GP13,GP18(CS0)->GP0,GP19(CS1)->GP1
 
-## Devkit button
-- Single press: Restart the controller.
-- Double press: Put the controller in bootsel mode.
+led：上移12.5mm
 
-Read the [Alpakka developer manual](https://inputlabs.io/devices/alpakka/manual/dev) for details about the **devkit** and more.
+r6电阻：左移21.5mm，上移4.75mm
+
+home：上移22.5mm
+
+滚轮：左移16mm
+
+两摇杆间距：51.75mm
+
+修订1：
+
+GP20(Home)->GP13,GP18(CS0)->GP0,GP19(CS1)->GP1
+
+led：上移12.5mm
+
+r6电阻：左移21.5mm，上移4.75mm
+
+home：上移22.5mm
+
+滚轮：左移18.5mm
+
+左摇杆：左移2.5mm
+
+两摇杆间距：52mm
+
+
+
