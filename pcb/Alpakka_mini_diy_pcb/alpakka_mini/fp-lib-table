@@ -1,0 +1,5 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "ILO_fp")(type "KiCad")(uri "${KIPRJMOD}/../../lib/footprint lib/ILO_fp.pretty")(options "")(descr ""))
+  (lib (name "Longmao_fp")(type "KiCad")(uri "${KIPRJMOD}/../../lib/footprint lib/Longmao_fp.pretty")(options "")(descr ""))
+)

@@ -1,0 +1,129 @@
+(footprint "0402"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 -1.5 0)
+		(layer "F.SilkS")
+		(uuid "cdf69da0-bf1d-48b6-92e4-7b762bd4454d")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.153)
+			)
+		)
+	)
+	(property "Value" "0402"
+		(at 0 -3 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "3eee2221-7af9-4d6a-ba79-a48c3fd1ac35")
+		(effects
+			(font
+				(size 0.8 0.8)
+				(thickness 0.153)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "459741e5-d06c-49d8-8b3b-fb6c24ad1ff1")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "6e178883-e695-41c1-9d59-319e29e7b7a6")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "326e46ba-5c5e-46cf-87a0-0d4e27a072d4")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(attr smd)
+	(fp_line
+		(start -1.2 -0.7)
+		(end -1.2 0.7)
+		(stroke
+			(width 0.153)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "96cc7009-e5c2-4181-9848-d145b9196cc4")
+	)
+	(fp_line
+		(start -1.2 -0.7)
+		(end 1.2 -0.7)
+		(stroke
+			(width 0.153)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "73486422-c87a-4ad4-8fe5-a3ffc70cb20a")
+	)
+	(fp_line
+		(start -1.2 0.7)
+		(end 1.2 0.7)
+		(stroke
+			(width 0.153)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "e208ea3a-d990-4992-b395-c95b18b77f83")
+	)
+	(fp_line
+		(start 1.2 -0.7)
+		(end 1.2 0.7)
+		(stroke
+			(width 0.153)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "0e852933-f119-4b7f-a503-b829e02656a9")
+	)
+	(pad "1" smd rect
+		(at -0.5 0)
+		(size 0.6 0.7)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "44c331f8-33e4-4ba1-bb1e-3071cc175bfd")
+	)
+	(pad "2" smd rect
+		(at 0.5 0)
+		(size 0.6 0.7)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(uuid "7b694997-43fc-41fd-818b-681c539b1571")
+	)
+	(model "${KIPRJMOD}/../../symbols/step/0402.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)
