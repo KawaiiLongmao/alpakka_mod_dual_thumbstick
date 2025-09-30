@@ -64,11 +64,16 @@ void Profile__report(Profile *self)
     self->r2.report(&self->r2);
     self->l4.report(&self->l4);
     self->r4.report(&self->r4);
+#if MOD_LINGHU
+    self->lk.report(&self->lk);
+    self->rk.report(&self->rk);
+#else
     self->rotary.report(&self->rotary);
+#endif
     self->left_thumbstick.report(&self->left_thumbstick);
 #if DEVICE_ALPAKKA_V0 == 1
     self->dhat.report(&self->dhat);
-#elif defined DEVICE_ALPAKKA_V1 || DEVICE_ALPAKKA_V0 == 2
+#elif defined(DEVICE_ALPAKKA_V1) || DEVICE_ALPAKKA_V0 == 2
     self->right_thumbstick.report(&self->right_thumbstick);
 #endif
     self->gyro.report(&self->gyro);
@@ -95,7 +100,12 @@ void Profile__reset(Profile *self)
     self->l4.reset(&self->l4);
     self->r4.reset(&self->r4);
     self->dhat.reset(&self->dhat);
+#if MOD_LINGHU
+    self->lk.reset(&self->lk);
+    self->rk.reset(&self->rk);
+#else
     self->rotary.reset(&self->rotary);
+#endif
     self->left_thumbstick.reset(&self->left_thumbstick);
     self->right_thumbstick.reset(&self->right_thumbstick);
     self->gyro.reset(&self->gyro);
@@ -122,6 +132,10 @@ void Profile__load_from_config(Profile *self, CtrlProfile *profile)
     self->r2 = Button_from_ctrl(PIN_R2, profile->sections[SECTION_R2]);
     self->l4 = Button_from_ctrl(PIN_L4, profile->sections[SECTION_L4]);
     self->r4 = Button_from_ctrl(PIN_R4, profile->sections[SECTION_R4]);
+#if MOD_LINGHU
+    self->lk = Button_from_ctrl(PIN_ROTARY_B, profile->sections[SECTION_ROTARY_UP]);
+    self->rk = Button_from_ctrl(PIN_ROTARY_A, profile->sections[SECTION_ROTARY_DOWN]);
+#else
     // Rotary.
     CtrlRotary up = profile->sections[SECTION_ROTARY_UP].rotary;
     CtrlRotary down = profile->sections[SECTION_ROTARY_DOWN].rotary;
@@ -132,6 +146,7 @@ void Profile__load_from_config(Profile *self, CtrlProfile *profile)
     rotary.config_mode(&rotary, 3, up.actions_3, down.actions_3);
     rotary.config_mode(&rotary, 4, up.actions_4, down.actions_4);
     self->rotary = rotary;
+#endif
     // Thumbsticks.
     thumbstick_from_ctrl(&(self->left_thumbstick), profile, 0);
     thumbstick_from_ctrl(&(self->right_thumbstick), profile, 1);

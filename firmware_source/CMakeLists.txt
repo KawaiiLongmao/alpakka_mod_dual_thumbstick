@@ -66,13 +66,19 @@ target_compile_definitions(${PROJECT} PRIVATE CFG_USE_RUMBLE=1)
 # target_compile_definitions(${PROJECT} PUBLIC DEVICE_IS_ALPAKKA=1)
 
 # alpakka_mod_dual_thumbstick 
-target_compile_definitions(${PROJECT} PUBLIC DEVICE_ALPAKKA_V0=2)
-target_compile_definitions(${PROJECT} PUBLIC DEVICE_IS_ALPAKKA=1)
+# target_compile_definitions(${PROJECT} PUBLIC DEVICE_ALPAKKA_V0=2)
+# target_compile_definitions(${PROJECT} PUBLIC DEVICE_IS_ALPAKKA=1)
 
 # alpakka_v1 
 # target_compile_definitions(${PROJECT} PUBLIC DEVICE_ALPAKKA_V1=1)
 # target_compile_definitions(${PROJECT} PUBLIC DEVICE_IS_ALPAKKA=1)
 # target_compile_definitions(${PROJECT} PUBLIC DEVICE_HAS_MARMOTA=1)
+
+# alpakka_v1_mod_linghu
+target_compile_definitions(${PROJECT} PUBLIC DEVICE_ALPAKKA_V1=1)
+target_compile_definitions(${PROJECT} PUBLIC DEVICE_IS_ALPAKKA=1)
+target_compile_definitions(${PROJECT} PUBLIC DEVICE_HAS_MARMOTA=1)
+target_compile_definitions(${PROJECT} PUBLIC MOD_LINGHU=1)
 
 # dongle 
 # target_compile_definitions(${PROJECT} PUBLIC DEVICE_DONGLE=1)

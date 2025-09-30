@@ -274,10 +274,10 @@ void loop_controller_task()
                 // If report fails repeatedly.
                 if (last_report_ts && (now - last_report_ts) > REPORT_TIMEOUT_US)
                 {
-#if defined DEVICE_ALPAKKA_V0
+#if defined(DEVICE_ALPAKKA_V0)
                     info("Dormant mode requested by loop task (no usb data)\n");
                     power_dormant(); // In v0, go sleep.
-#elif defined DEVICE_ALPAKKA_V1
+#elif defined(DEVICE_ALPAKKA_V1)
                     set_wireless(); // In v1, go wireless.
 #endif
                 }

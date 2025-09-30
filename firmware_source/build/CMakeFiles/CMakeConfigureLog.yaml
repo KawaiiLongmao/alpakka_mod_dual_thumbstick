@@ -122,8 +122,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "E:/1wok/dev/code/MCU_Source/alpakka_mod_dual_thumbstick/build/CMakeFiles/CMakeScratch/TryCompile-rrjw5q"
-      binary: "E:/1wok/dev/code/MCU_Source/alpakka_mod_dual_thumbstick/build/CMakeFiles/CMakeScratch/TryCompile-rrjw5q"
+      source: "E:/1wok/dev/code/MCU_Source/alpakka_mod_dual_thumbstick/build/CMakeFiles/CMakeScratch/TryCompile-2u06pi"
+      binary: "E:/1wok/dev/code/MCU_Source/alpakka_mod_dual_thumbstick/build/CMakeFiles/CMakeScratch/TryCompile-2u06pi"
     cmakeVariables:
       CMAKE_C_FLAGS: "-mcpu=cortex-m0plus -mthumb"
       CMAKE_C_FLAGS_DEBUG: "-Og -g"
@@ -133,10 +133,10 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'E:/1wok/dev/code/MCU_Source/alpakka_mod_dual_thumbstick/build/CMakeFiles/CMakeScratch/TryCompile-rrjw5q'
+        Change Dir: 'E:/1wok/dev/code/MCU_Source/alpakka_mod_dual_thumbstick/build/CMakeFiles/CMakeScratch/TryCompile-2u06pi'
         
-        Run Build Command(s): C:/Users/KawaiiLongmao/.pico-sdk/ninja/v1.12.1/ninja.exe -v cmTC_f2baf
-        [1/2] C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-gcc.exe   -mcpu=cortex-m0plus -mthumb    -v -o CMakeFiles/cmTC_f2baf.dir/CMakeCCompilerABI.c.obj -c C:/Users/KawaiiLongmao/.pico-sdk/cmake/v3.31.5/share/cmake-3.31/Modules/CMakeCCompilerABI.c
+        Run Build Command(s): C:/Users/KawaiiLongmao/.pico-sdk/ninja/v1.12.1/ninja.exe -v cmTC_eb700
+        [1/2] C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-gcc.exe   -mcpu=cortex-m0plus -mthumb    -v -o CMakeFiles/cmTC_eb700.dir/CMakeCCompilerABI.c.obj -c C:/Users/KawaiiLongmao/.pico-sdk/cmake/v3.31.5/share/cmake-3.31/Modules/CMakeCCompilerABI.c
         Using built-in specs.
         COLLECT_GCC=C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-gcc.exe
         Target: arm-none-eabi
@@ -144,8 +144,8 @@ events:
         Thread model: single
         Supported LTO compression algorithms: zlib
         gcc version 14.2.1 20241119 (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) 
-        COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_f2baf.dir/CMakeCCompilerABI.c.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_f2baf.dir/'
-         C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/cc1.exe -quiet -v -imultilib thumb/v6-m/nofp -iprefix C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/ -isysroot C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi -D__USES_INITFINI__ C:/Users/KawaiiLongmao/.pico-sdk/cmake/v3.31.5/share/cmake-3.31/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_f2baf.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcpu=cortex-m0plus -mthumb -mfloat-abi=soft -mlibarch=armv6s-m -march=armv6s-m -version -o C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccTc1nZc.s
+        COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_eb700.dir/CMakeCCompilerABI.c.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_eb700.dir/'
+         C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/cc1.exe -quiet -v -imultilib thumb/v6-m/nofp -iprefix C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/ -isysroot C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi -D__USES_INITFINI__ C:/Users/KawaiiLongmao/.pico-sdk/cmake/v3.31.5/share/cmake-3.31/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_eb700.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcpu=cortex-m0plus -mthumb -mfloat-abi=soft -mlibarch=armv6s-m -march=armv6s-m -version -o C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccj2SiGW.s
         GNU C17 (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) version 14.2.1 20241119 (arm-none-eabi)
         	compiled by GNU C version 9.3-win32 20200320, GMP version 6.2.1, MPFR version 3.1.6, MPC version 1.0.3, isl version isl-0.15-1-g835ea3a-GMP
         
@@ -162,13 +162,13 @@ events:
          C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include
         End of search list.
         Compiler executable checksum: 63ce4b303c7eb47a24bbf869f5c70b36
-        COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_f2baf.dir/CMakeCCompilerABI.c.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_f2baf.dir/'
-         C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv6s-m -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_f2baf.dir/CMakeCCompilerABI.c.obj C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccTc1nZc.s
+        COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_eb700.dir/CMakeCCompilerABI.c.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_eb700.dir/'
+         C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv6s-m -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_eb700.dir/CMakeCCompilerABI.c.obj C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccj2SiGW.s
         GNU assembler version 2.43.1 (arm-none-eabi) using BFD version (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) 2.43.1.20241119
         COMPILER_PATH=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/
         LIBRARY_PATH=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/v6-m/nofp/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/thumb/v6-m/nofp/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/\x0d
-        COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_f2baf.dir/CMakeCCompilerABI.c.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_f2baf.dir/CMakeCCompilerABI.c.'\x0d
-        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-gcc.exe -mcpu=cortex-m0plus -mthumb -Wl,--build-id=none -nostdlib -v CMakeFiles/cmTC_f2baf.dir/CMakeCCompilerABI.c.obj -o cmTC_f2baf.elf   && cd ."
+        COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_eb700.dir/CMakeCCompilerABI.c.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_eb700.dir/CMakeCCompilerABI.c.'\x0d
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-gcc.exe -mcpu=cortex-m0plus -mthumb -Wl,--build-id=none -nostdlib -v CMakeFiles/cmTC_eb700.dir/CMakeCCompilerABI.c.obj -o cmTC_eb700.elf   && cd ."
         Using built-in specs.
         COLLECT_GCC=C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-gcc.exe
         COLLECT_LTO_WRAPPER=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/lto-wrapper.exe
@@ -179,10 +179,10 @@ events:
         gcc version 14.2.1 20241119 (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) 
         COMPILER_PATH=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/
         LIBRARY_PATH=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/v6-m/nofp/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/thumb/v6-m/nofp/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/
-        COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-nostdlib' '-v' '-o' 'cmTC_f2baf.elf' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'cmTC_f2baf.elf.'
-         C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/collect2.exe -plugin C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/liblto_plugin.dll -plugin-opt=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\cc2sRTEb.res --sysroot=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi -X -o cmTC_f2baf.elf -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1 -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib --build-id=none CMakeFiles/cmTC_f2baf.dir/CMakeCCompilerABI.c.obj\x0d
+        COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-nostdlib' '-v' '-o' 'cmTC_eb700.elf' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'cmTC_eb700.elf.'
+         C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/collect2.exe -plugin C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/liblto_plugin.dll -plugin-opt=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccNBApg5.res --sysroot=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi -X -o cmTC_eb700.elf -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1 -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib --build-id=none CMakeFiles/cmTC_eb700.dir/CMakeCCompilerABI.c.obj\x0d
         C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: warning: cannot find entry symbol _start; defaulting to 00008000\x0d
-        COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-nostdlib' '-v' '-o' 'cmTC_f2baf.elf' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'cmTC_f2baf.elf.'\x0d
+        COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-nostdlib' '-v' '-o' 'cmTC_eb700.elf' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'cmTC_eb700.elf.'\x0d
         
       exitCode: 0
   -
@@ -215,10 +215,10 @@ events:
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
-        ignore line: [Change Dir: 'E:/1wok/dev/code/MCU_Source/alpakka_mod_dual_thumbstick/build/CMakeFiles/CMakeScratch/TryCompile-rrjw5q']
+        ignore line: [Change Dir: 'E:/1wok/dev/code/MCU_Source/alpakka_mod_dual_thumbstick/build/CMakeFiles/CMakeScratch/TryCompile-2u06pi']
         ignore line: []
-        ignore line: [Run Build Command(s): C:/Users/KawaiiLongmao/.pico-sdk/ninja/v1.12.1/ninja.exe -v cmTC_f2baf]
-        ignore line: [[1/2] C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-gcc.exe   -mcpu=cortex-m0plus -mthumb    -v -o CMakeFiles/cmTC_f2baf.dir/CMakeCCompilerABI.c.obj -c C:/Users/KawaiiLongmao/.pico-sdk/cmake/v3.31.5/share/cmake-3.31/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s): C:/Users/KawaiiLongmao/.pico-sdk/ninja/v1.12.1/ninja.exe -v cmTC_eb700]
+        ignore line: [[1/2] C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-gcc.exe   -mcpu=cortex-m0plus -mthumb    -v -o CMakeFiles/cmTC_eb700.dir/CMakeCCompilerABI.c.obj -c C:/Users/KawaiiLongmao/.pico-sdk/cmake/v3.31.5/share/cmake-3.31/Modules/CMakeCCompilerABI.c]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-gcc.exe]
         ignore line: [Target: arm-none-eabi]
@@ -226,8 +226,8 @@ events:
         ignore line: [Thread model: single]
         ignore line: [Supported LTO compression algorithms: zlib]
         ignore line: [gcc version 14.2.1 20241119 (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_f2baf.dir/CMakeCCompilerABI.c.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_f2baf.dir/']
-        ignore line: [ C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/cc1.exe -quiet -v -imultilib thumb/v6-m/nofp -iprefix C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/ -isysroot C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi -D__USES_INITFINI__ C:/Users/KawaiiLongmao/.pico-sdk/cmake/v3.31.5/share/cmake-3.31/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_f2baf.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcpu=cortex-m0plus -mthumb -mfloat-abi=soft -mlibarch=armv6s-m -march=armv6s-m -version -o C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccTc1nZc.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_eb700.dir/CMakeCCompilerABI.c.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_eb700.dir/']
+        ignore line: [ C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/cc1.exe -quiet -v -imultilib thumb/v6-m/nofp -iprefix C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/ -isysroot C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi -D__USES_INITFINI__ C:/Users/KawaiiLongmao/.pico-sdk/cmake/v3.31.5/share/cmake-3.31/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_eb700.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mcpu=cortex-m0plus -mthumb -mfloat-abi=soft -mlibarch=armv6s-m -march=armv6s-m -version -o C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccj2SiGW.s]
         ignore line: [GNU C17 (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) version 14.2.1 20241119 (arm-none-eabi)]
         ignore line: [	compiled by GNU C version 9.3-win32 20200320  GMP version 6.2.1  MPFR version 3.1.6  MPC version 1.0.3  isl version isl-0.15-1-g835ea3a-GMP]
         ignore line: []
@@ -244,8 +244,8 @@ events:
         ignore line: [ C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include]
         ignore line: [End of search list.]
         ignore line: [Compiler executable checksum: 63ce4b303c7eb47a24bbf869f5c70b36]
-        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_f2baf.dir/CMakeCCompilerABI.c.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_f2baf.dir/']
-        ignore line: [ C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv6s-m -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_f2baf.dir/CMakeCCompilerABI.c.obj C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccTc1nZc.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_eb700.dir/CMakeCCompilerABI.c.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_eb700.dir/']
+        ignore line: [ C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv6s-m -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_eb700.dir/CMakeCCompilerABI.c.obj C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccj2SiGW.s]
         ignore line: [GNU assembler version 2.43.1 (arm-none-eabi) using BFD version (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) 2.43.1.20241119]
         ignore line: [COMPILER_PATH=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/]
         ignore line: [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/]
@@ -257,8 +257,8 @@ events:
         ignore line: [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/]
         ignore line: [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/]
         ignore line: [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/\x0d]
-        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_f2baf.dir/CMakeCCompilerABI.c.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_f2baf.dir/CMakeCCompilerABI.c.'\x0d]
-        ignore line: [[2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-gcc.exe -mcpu=cortex-m0plus -mthumb -Wl --build-id=none -nostdlib -v CMakeFiles/cmTC_f2baf.dir/CMakeCCompilerABI.c.obj -o cmTC_f2baf.elf   && cd ."]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_eb700.dir/CMakeCCompilerABI.c.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_eb700.dir/CMakeCCompilerABI.c.'\x0d]
+        ignore line: [[2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-gcc.exe -mcpu=cortex-m0plus -mthumb -Wl --build-id=none -nostdlib -v CMakeFiles/cmTC_eb700.dir/CMakeCCompilerABI.c.obj -o cmTC_eb700.elf   && cd ."]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-gcc.exe]
         ignore line: [COLLECT_LTO_WRAPPER=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/lto-wrapper.exe]
@@ -277,17 +277,17 @@ events:
         ignore line: [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/]
         ignore line: [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/]
         ignore line: [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-nostdlib' '-v' '-o' 'cmTC_f2baf.elf' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'cmTC_f2baf.elf.']
-        link line: [ C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/collect2.exe -plugin C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/liblto_plugin.dll -plugin-opt=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\cc2sRTEb.res --sysroot=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi -X -o cmTC_f2baf.elf -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1 -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib --build-id=none CMakeFiles/cmTC_f2baf.dir/CMakeCCompilerABI.c.obj\x0d]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-nostdlib' '-v' '-o' 'cmTC_eb700.elf' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'cmTC_eb700.elf.']
+        link line: [ C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/collect2.exe -plugin C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/liblto_plugin.dll -plugin-opt=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccNBApg5.res --sysroot=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi -X -o cmTC_eb700.elf -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1 -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib --build-id=none CMakeFiles/cmTC_eb700.dir/CMakeCCompilerABI.c.obj\x0d]
           arg [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/collect2.exe] ==> ignore
           arg [-plugin] ==> ignore
           arg [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/liblto_plugin.dll] ==> ignore
           arg [-plugin-opt=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/lto-wrapper.exe] ==> ignore
-          arg [-plugin-opt=-fresolution=C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\cc2sRTEb.res] ==> ignore
+          arg [-plugin-opt=-fresolution=C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccNBApg5.res] ==> ignore
           arg [--sysroot=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi] ==> ignore
           arg [-X] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_f2baf.elf] ==> ignore
+          arg [cmTC_eb700.elf] ==> ignore
           arg [-LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/v6-m/nofp] ==> dir [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/v6-m/nofp]
           arg [-LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp] ==> dir [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp]
           arg [-LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/thumb/v6-m/nofp] ==> dir [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/thumb/v6-m/nofp]
@@ -296,10 +296,10 @@ events:
           arg [-LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib] ==> dir [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib]
           arg [-LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib] ==> dir [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib]
           arg [--build-id=none] ==> ignore
-          arg [CMakeFiles/cmTC_f2baf.dir/CMakeCCompilerABI.c.obj] ==> ignore
+          arg [CMakeFiles/cmTC_eb700.dir/CMakeCCompilerABI.c.obj] ==> ignore
         ignore line: [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: warning: cannot find entry symbol _start]
         ignore line: [ defaulting to 00008000\x0d]
-        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-nostdlib' '-v' '-o' 'cmTC_f2baf.elf' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'cmTC_f2baf.elf.'\x0d]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-nostdlib' '-v' '-o' 'cmTC_eb700.elf' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'cmTC_eb700.elf.'\x0d]
         ignore line: []
         ignore line: []
         collapse library dir [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/v6-m/nofp] ==> [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/lib/gcc/arm-none-eabi/14.2.1/thumb/v6-m/nofp]
@@ -324,8 +324,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "E:/1wok/dev/code/MCU_Source/alpakka_mod_dual_thumbstick/build/CMakeFiles/CMakeScratch/TryCompile-hkm24p"
-      binary: "E:/1wok/dev/code/MCU_Source/alpakka_mod_dual_thumbstick/build/CMakeFiles/CMakeScratch/TryCompile-hkm24p"
+      source: "E:/1wok/dev/code/MCU_Source/alpakka_mod_dual_thumbstick/build/CMakeFiles/CMakeScratch/TryCompile-2babup"
+      binary: "E:/1wok/dev/code/MCU_Source/alpakka_mod_dual_thumbstick/build/CMakeFiles/CMakeScratch/TryCompile-2babup"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "-mcpu=cortex-m0plus -mthumb"
       CMAKE_CXX_FLAGS_DEBUG: "-Og -g"
@@ -336,10 +336,10 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'E:/1wok/dev/code/MCU_Source/alpakka_mod_dual_thumbstick/build/CMakeFiles/CMakeScratch/TryCompile-hkm24p'
+        Change Dir: 'E:/1wok/dev/code/MCU_Source/alpakka_mod_dual_thumbstick/build/CMakeFiles/CMakeScratch/TryCompile-2babup'
         
-        Run Build Command(s): C:/Users/KawaiiLongmao/.pico-sdk/ninja/v1.12.1/ninja.exe -v cmTC_33948
-        [1/2] C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-g++.exe   -mcpu=cortex-m0plus -mthumb    -v -o CMakeFiles/cmTC_33948.dir/CMakeCXXCompilerABI.cpp.obj -c C:/Users/KawaiiLongmao/.pico-sdk/cmake/v3.31.5/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): C:/Users/KawaiiLongmao/.pico-sdk/ninja/v1.12.1/ninja.exe -v cmTC_a81f5
+        [1/2] C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-g++.exe   -mcpu=cortex-m0plus -mthumb    -v -o CMakeFiles/cmTC_a81f5.dir/CMakeCXXCompilerABI.cpp.obj -c C:/Users/KawaiiLongmao/.pico-sdk/cmake/v3.31.5/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
         COLLECT_GCC=C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-g++.exe
         Target: arm-none-eabi
@@ -347,8 +347,8 @@ events:
         Thread model: single
         Supported LTO compression algorithms: zlib
         gcc version 14.2.1 20241119 (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) 
-        COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_33948.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_33948.dir/'
-         C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/cc1plus.exe -quiet -v -imultilib thumb/v6-m/nofp -iprefix C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/ -isysroot C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi -D__USES_INITFINI__ C:/Users/KawaiiLongmao/.pico-sdk/cmake/v3.31.5/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_33948.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mcpu=cortex-m0plus -mthumb -mfloat-abi=soft -mlibarch=armv6s-m -march=armv6s-m -version -o C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccYEO7Xr.s
+        COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_a81f5.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_a81f5.dir/'
+         C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/cc1plus.exe -quiet -v -imultilib thumb/v6-m/nofp -iprefix C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/ -isysroot C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi -D__USES_INITFINI__ C:/Users/KawaiiLongmao/.pico-sdk/cmake/v3.31.5/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_a81f5.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mcpu=cortex-m0plus -mthumb -mfloat-abi=soft -mlibarch=armv6s-m -march=armv6s-m -version -o C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccmvbPke.s
         GNU C++17 (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) version 14.2.1 20241119 (arm-none-eabi)
         	compiled by GNU C version 9.3-win32 20200320, GMP version 6.2.1, MPFR version 3.1.6, MPC version 1.0.3, isl version isl-0.15-1-g835ea3a-GMP
         
@@ -371,13 +371,13 @@ events:
          C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include
         End of search list.
         Compiler executable checksum: dad18755456eb98fd3f9411f1449dfa2
-        COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_33948.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_33948.dir/'
-         C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv6s-m -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_33948.dir/CMakeCXXCompilerABI.cpp.obj C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccYEO7Xr.s
+        COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_a81f5.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_a81f5.dir/'
+         C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv6s-m -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_a81f5.dir/CMakeCXXCompilerABI.cpp.obj C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccmvbPke.s
         GNU assembler version 2.43.1 (arm-none-eabi) using BFD version (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) 2.43.1.20241119
         COMPILER_PATH=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/
         LIBRARY_PATH=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/v6-m/nofp/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/thumb/v6-m/nofp/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/\x0d
-        COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_33948.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_33948.dir/CMakeCXXCompilerABI.cpp.'\x0d
-        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-g++.exe -mcpu=cortex-m0plus -mthumb -Wl,--build-id=none -nostdlib -v CMakeFiles/cmTC_33948.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_33948.elf   && cd ."
+        COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_a81f5.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_a81f5.dir/CMakeCXXCompilerABI.cpp.'\x0d
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-g++.exe -mcpu=cortex-m0plus -mthumb -Wl,--build-id=none -nostdlib -v CMakeFiles/cmTC_a81f5.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_a81f5.elf   && cd ."
         Using built-in specs.
         COLLECT_GCC=C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-g++.exe
         COLLECT_LTO_WRAPPER=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/lto-wrapper.exe
@@ -388,10 +388,10 @@ events:
         gcc version 14.2.1 20241119 (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) 
         COMPILER_PATH=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/
         LIBRARY_PATH=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/v6-m/nofp/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/thumb/v6-m/nofp/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/;C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/
-        COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-nostdlib' '-v' '-o' 'cmTC_33948.elf' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'cmTC_33948.elf.'
-         C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/collect2.exe -plugin C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/liblto_plugin.dll -plugin-opt=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccKhVFIx.res --sysroot=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi -X -o cmTC_33948.elf -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1 -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib --build-id=none CMakeFiles/cmTC_33948.dir/CMakeCXXCompilerABI.cpp.obj\x0d
+        COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-nostdlib' '-v' '-o' 'cmTC_a81f5.elf' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'cmTC_a81f5.elf.'
+         C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/collect2.exe -plugin C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/liblto_plugin.dll -plugin-opt=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\cco8iRdo.res --sysroot=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi -X -o cmTC_a81f5.elf -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1 -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib --build-id=none CMakeFiles/cmTC_a81f5.dir/CMakeCXXCompilerABI.cpp.obj\x0d
         C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: warning: cannot find entry symbol _start; defaulting to 00008000\x0d
-        COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-nostdlib' '-v' '-o' 'cmTC_33948.elf' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'cmTC_33948.elf.'\x0d
+        COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-nostdlib' '-v' '-o' 'cmTC_a81f5.elf' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'cmTC_a81f5.elf.'\x0d
         
       exitCode: 0
   -
@@ -430,10 +430,10 @@ events:
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
-        ignore line: [Change Dir: 'E:/1wok/dev/code/MCU_Source/alpakka_mod_dual_thumbstick/build/CMakeFiles/CMakeScratch/TryCompile-hkm24p']
+        ignore line: [Change Dir: 'E:/1wok/dev/code/MCU_Source/alpakka_mod_dual_thumbstick/build/CMakeFiles/CMakeScratch/TryCompile-2babup']
         ignore line: []
-        ignore line: [Run Build Command(s): C:/Users/KawaiiLongmao/.pico-sdk/ninja/v1.12.1/ninja.exe -v cmTC_33948]
-        ignore line: [[1/2] C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-g++.exe   -mcpu=cortex-m0plus -mthumb    -v -o CMakeFiles/cmTC_33948.dir/CMakeCXXCompilerABI.cpp.obj -c C:/Users/KawaiiLongmao/.pico-sdk/cmake/v3.31.5/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): C:/Users/KawaiiLongmao/.pico-sdk/ninja/v1.12.1/ninja.exe -v cmTC_a81f5]
+        ignore line: [[1/2] C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-g++.exe   -mcpu=cortex-m0plus -mthumb    -v -o CMakeFiles/cmTC_a81f5.dir/CMakeCXXCompilerABI.cpp.obj -c C:/Users/KawaiiLongmao/.pico-sdk/cmake/v3.31.5/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-g++.exe]
         ignore line: [Target: arm-none-eabi]
@@ -441,8 +441,8 @@ events:
         ignore line: [Thread model: single]
         ignore line: [Supported LTO compression algorithms: zlib]
         ignore line: [gcc version 14.2.1 20241119 (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_33948.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_33948.dir/']
-        ignore line: [ C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/cc1plus.exe -quiet -v -imultilib thumb/v6-m/nofp -iprefix C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/ -isysroot C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi -D__USES_INITFINI__ C:/Users/KawaiiLongmao/.pico-sdk/cmake/v3.31.5/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_33948.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mcpu=cortex-m0plus -mthumb -mfloat-abi=soft -mlibarch=armv6s-m -march=armv6s-m -version -o C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccYEO7Xr.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_a81f5.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_a81f5.dir/']
+        ignore line: [ C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/cc1plus.exe -quiet -v -imultilib thumb/v6-m/nofp -iprefix C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/ -isysroot C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi -D__USES_INITFINI__ C:/Users/KawaiiLongmao/.pico-sdk/cmake/v3.31.5/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_a81f5.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mcpu=cortex-m0plus -mthumb -mfloat-abi=soft -mlibarch=armv6s-m -march=armv6s-m -version -o C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccmvbPke.s]
         ignore line: [GNU C++17 (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) version 14.2.1 20241119 (arm-none-eabi)]
         ignore line: [	compiled by GNU C version 9.3-win32 20200320  GMP version 6.2.1  MPFR version 3.1.6  MPC version 1.0.3  isl version isl-0.15-1-g835ea3a-GMP]
         ignore line: []
@@ -465,8 +465,8 @@ events:
         ignore line: [ C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/include]
         ignore line: [End of search list.]
         ignore line: [Compiler executable checksum: dad18755456eb98fd3f9411f1449dfa2]
-        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_33948.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_33948.dir/']
-        ignore line: [ C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv6s-m -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_33948.dir/CMakeCXXCompilerABI.cpp.obj C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccYEO7Xr.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_a81f5.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_a81f5.dir/']
+        ignore line: [ C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/as.exe -v -march=armv6s-m -mfloat-abi=soft -meabi=5 -o CMakeFiles/cmTC_a81f5.dir/CMakeCXXCompilerABI.cpp.obj C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccmvbPke.s]
         ignore line: [GNU assembler version 2.43.1 (arm-none-eabi) using BFD version (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) 2.43.1.20241119]
         ignore line: [COMPILER_PATH=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/]
         ignore line: [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/]
@@ -478,8 +478,8 @@ events:
         ignore line: [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/]
         ignore line: [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/]
         ignore line: [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/\x0d]
-        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_33948.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_33948.dir/CMakeCXXCompilerABI.cpp.'\x0d]
-        ignore line: [[2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-g++.exe -mcpu=cortex-m0plus -mthumb -Wl --build-id=none -nostdlib -v CMakeFiles/cmTC_33948.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_33948.elf   && cd ."]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-v' '-o' 'CMakeFiles/cmTC_a81f5.dir/CMakeCXXCompilerABI.cpp.obj' '-c' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'CMakeFiles/cmTC_a81f5.dir/CMakeCXXCompilerABI.cpp.'\x0d]
+        ignore line: [[2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-g++.exe -mcpu=cortex-m0plus -mthumb -Wl --build-id=none -nostdlib -v CMakeFiles/cmTC_a81f5.dir/CMakeCXXCompilerABI.cpp.obj -o cmTC_a81f5.elf   && cd ."]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=C:\\Users\\KawaiiLongmao\\.pico-sdk\\toolchain\\14_2_Rel1\\bin\\arm-none-eabi-g++.exe]
         ignore line: [COLLECT_LTO_WRAPPER=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/lto-wrapper.exe]
@@ -498,17 +498,17 @@ events:
         ignore line: [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/]
         ignore line: [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/]
         ignore line: [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-nostdlib' '-v' '-o' 'cmTC_33948.elf' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'cmTC_33948.elf.']
-        link line: [ C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/collect2.exe -plugin C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/liblto_plugin.dll -plugin-opt=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccKhVFIx.res --sysroot=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi -X -o cmTC_33948.elf -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1 -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib --build-id=none CMakeFiles/cmTC_33948.dir/CMakeCXXCompilerABI.cpp.obj\x0d]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-nostdlib' '-v' '-o' 'cmTC_a81f5.elf' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'cmTC_a81f5.elf.']
+        link line: [ C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/collect2.exe -plugin C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/liblto_plugin.dll -plugin-opt=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/lto-wrapper.exe -plugin-opt=-fresolution=C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\cco8iRdo.res --sysroot=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi -X -o cmTC_a81f5.elf -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/thumb/v6-m/nofp -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1 -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib -LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib --build-id=none CMakeFiles/cmTC_a81f5.dir/CMakeCXXCompilerABI.cpp.obj\x0d]
           arg [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/collect2.exe] ==> ignore
           arg [-plugin] ==> ignore
           arg [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/liblto_plugin.dll] ==> ignore
           arg [-plugin-opt=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../libexec/gcc/arm-none-eabi/14.2.1/lto-wrapper.exe] ==> ignore
-          arg [-plugin-opt=-fresolution=C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\ccKhVFIx.res] ==> ignore
+          arg [-plugin-opt=-fresolution=C:\\Users\\KAWAII~1\\AppData\\Local\\Temp\\cco8iRdo.res] ==> ignore
           arg [--sysroot=C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi] ==> ignore
           arg [-X] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_33948.elf] ==> ignore
+          arg [cmTC_a81f5.elf] ==> ignore
           arg [-LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/v6-m/nofp] ==> dir [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/v6-m/nofp]
           arg [-LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp] ==> dir [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp]
           arg [-LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/thumb/v6-m/nofp] ==> dir [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib/thumb/v6-m/nofp]
@@ -517,10 +517,10 @@ events:
           arg [-LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib] ==> dir [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/lib]
           arg [-LC:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib] ==> dir [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../arm-none-eabi/lib]
           arg [--build-id=none] ==> ignore
-          arg [CMakeFiles/cmTC_33948.dir/CMakeCXXCompilerABI.cpp.obj] ==> ignore
+          arg [CMakeFiles/cmTC_a81f5.dir/CMakeCXXCompilerABI.cpp.obj] ==> ignore
         ignore line: [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld.exe: warning: cannot find entry symbol _start]
         ignore line: [ defaulting to 00008000\x0d]
-        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-nostdlib' '-v' '-o' 'cmTC_33948.elf' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'cmTC_33948.elf.'\x0d]
+        ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m0plus' '-mthumb' '-nostdlib' '-v' '-o' 'cmTC_a81f5.elf' '-mfloat-abi=soft' '-mlibarch=armv6s-m' '-march=armv6s-m' '-dumpdir' 'cmTC_a81f5.elf.'\x0d]
         ignore line: []
         ignore line: []
         collapse library dir [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.2.1/thumb/v6-m/nofp] ==> [C:/Users/KawaiiLongmao/.pico-sdk/toolchain/14_2_Rel1/lib/gcc/arm-none-eabi/14.2.1/thumb/v6-m/nofp]

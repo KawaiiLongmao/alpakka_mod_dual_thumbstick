@@ -664,9 +664,9 @@ void DualSense::USB_Init()
     usbd_initialize(s_usb_busid, (uintptr_t)CFG_USBD_BASE, usbd_event_handler);
 
 #if (CFG_USE_RUMBLE)
-    HAL_PWM::Init(PIN_L, 8, 4000);
+    HAL_PWM::Init(PIN_L, 8, 200);
     HAL_PWM::SetDutyCompareCount(PIN_L, 0);
-    HAL_PWM::Init(PIN_R, 8, 4000);
+    HAL_PWM::Init(PIN_R, 8, 200);
     HAL_PWM::SetDutyCompareCount(PIN_R, 0);
 #endif
 }
