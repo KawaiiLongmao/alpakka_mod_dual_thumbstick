@@ -312,6 +312,23 @@ namespace HAL_PWM
 
     void SetDutyCompareCount(GPIONumber pin, uint16_t duty_compare_count)
     {
+        // 查找通道状态
+        ChannelState *channel_state = nullptr;
+        for (auto &state : s_channel_state_array)
+        {
+            if (state.initialized && state.gpio_num == pin)
+            {
+                channel_state = &state;
+                break;
+            }
+        }
+
+        if (!channel_state)
+        {
+            LOG_PRINTF(Log::ERROR, "HAL_PWM::SetDutyCompareCount - PWM not initialized for pin %d\n", pin);
+            return;
+        }
+
         // 直接设置 PWM 占空比
         pwm_set_gpio_level(pin, duty_compare_count);
     }

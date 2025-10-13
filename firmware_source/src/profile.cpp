@@ -133,8 +133,20 @@ void Profile__load_from_config(Profile *self, CtrlProfile *profile)
     self->l4 = Button_from_ctrl(PIN_L4, profile->sections[SECTION_L4]);
     self->r4 = Button_from_ctrl(PIN_R4, profile->sections[SECTION_R4]);
 #if MOD_LINGHU
-    self->lk = Button_from_ctrl(PIN_ROTARY_B, profile->sections[SECTION_ROTARY_UP]);
-    self->rk = Button_from_ctrl(PIN_ROTARY_A, profile->sections[SECTION_ROTARY_DOWN]);
+    CtrlRotary up = profile->sections[SECTION_ROTARY_UP].rotary;
+    CtrlRotary down = profile->sections[SECTION_ROTARY_DOWN].rotary;
+    CtrlSection lk;
+    CtrlSection rk;
+    lk.button = {
+        .mode = NORMAL,
+        .actions = {up.actions_0[0]},
+    };
+    rk.button = {
+        .mode = NORMAL,
+        .actions = {down.actions_0[0]},
+    };
+    self->lk = Button_from_ctrl(PIN_ROTARY_B, lk);
+    self->rk = Button_from_ctrl(PIN_ROTARY_A, rk);
 #else
     // Rotary.
     CtrlRotary up = profile->sections[SECTION_ROTARY_UP].rotary;

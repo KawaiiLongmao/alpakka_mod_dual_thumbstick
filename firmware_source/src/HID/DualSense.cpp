@@ -8,7 +8,7 @@
 #include "core/usbd_core.h"
 #include "hid.h"
 #include "HAL/Time.h"
-#include "HAL/PWM.h"
+#include "Rumble.h"
 
 namespace
 {
@@ -594,55 +594,27 @@ namespace
         report.State.SensorTimestamp = TimestampConvert(ts_us);
     }
 
-#if (DEVICE_ALPAKKA_V0) && (DEVICE_ALPAKKA_V0 == 2)
-#define PIN_L 17
-#define PIN_R 18
-#else
-#define PIN_L 0
-#define PIN_R 1
-#endif
-
     void handleReportOut02(const DualSenseStruct::ReportOut02 &report)
     {
 #if (CFG_USE_RUMBLE)
         // hostTimeStamp = report.State.HostTimestamp;
         if (report.State.EnableImprovedRumbleEmulation)
         {
-            const uint16_t l_duty = (report.State.RumbleEmulationLeft * 100) / 255;
-            HAL_PWM::SetDutyCompareCount(PIN_L, l_duty * 255 / 100);
-            const uint16_t r_duty = (report.State.RumbleEmulationRight * 100) / 255;
-            HAL_PWM::SetDutyCompareCount(PIN_R, r_duty * 255 / 100);
+            const float l_duty = report.State.RumbleEmulationLeft / 255.f;
+            HAL_PWM::SetDutyCompareCount(PIN_L, l_duty * 255);
+            const float r_duty = report.State.RumbleEmulationRight / 255.f;
+            HAL_PWM::SetDutyCompareCount(PIN_R, r_duty * 255);
         }
         else
         {
-            const uint16_t l_duty = (report.State.RumbleEmulationLeft * 100) / 127;
-            HAL_PWM::SetDutyCompareCount(PIN_L, l_duty * 255 / 100);
-            const uint16_t r_duty = (report.State.RumbleEmulationRight * 100) / 127;
-            HAL_PWM::SetDutyCompareCount(PIN_R, r_duty * 255 / 100);
+            const float l_duty = report.State.RumbleEmulationLeft / 127.f;
+            HAL_PWM::SetDutyCompareCount(PIN_L, l_duty * 255);
+            const float r_duty = report.State.RumbleEmulationRight / 127.f;
+            HAL_PWM::SetDutyCompareCount(PIN_R, r_duty * 255);
         }
 #endif
     }
 
-    void handleReportOut31(const DualSenseStruct::ReportOut31 &report)
-    {
-#if (CFG_USE_RUMBLE)
-        // hostTimeStamp = report.Data.State.HostTimestamp;
-        if (report.Data.State.EnableImprovedRumbleEmulation)
-        {
-            const uint16_t l_duty = (report.Data.State.RumbleEmulationLeft * 100) / 255;
-            HAL_PWM::SetDutyCompareCount(PIN_L, l_duty * 255 / 100);
-            const uint16_t r_duty = (report.Data.State.RumbleEmulationRight * 100) / 255;
-            HAL_PWM::SetDutyCompareCount(PIN_R, r_duty * 255 / 100);
-        }
-        else
-        {
-            const uint16_t l_duty = (report.Data.State.RumbleEmulationLeft * 100) / 127;
-            HAL_PWM::SetDutyCompareCount(PIN_L, l_duty * 255 / 100);
-            const uint16_t r_duty = (report.Data.State.RumbleEmulationRight * 100) / 127;
-            HAL_PWM::SetDutyCompareCount(PIN_R, r_duty * 255 / 100);
-        }
-#endif
-    }
 } // namespace
 
 void DualSense::USB_Init()
@@ -662,13 +634,6 @@ void DualSense::USB_Init()
     usbd_add_endpoint(s_usb_busid, &s_usbd_hid_out_ep);
 
     usbd_initialize(s_usb_busid, (uintptr_t)CFG_USBD_BASE, usbd_event_handler);
-
-#if (CFG_USE_RUMBLE)
-    HAL_PWM::Init(PIN_L, 8, 200);
-    HAL_PWM::SetDutyCompareCount(PIN_L, 0);
-    HAL_PWM::Init(PIN_R, 8, 200);
-    HAL_PWM::SetDutyCompareCount(PIN_R, 0);
-#endif
 }
 
 void DualSense::USB_Process()

@@ -15,50 +15,60 @@
 #include "loop.h"
 #include "logging.h"
 
-void power_gpio_init() {
-    #ifdef DEVICE_HAS_MARMOTA
-        gpio_init(PIN_BATT_STAT_1);
-        gpio_pull_up(PIN_BATT_STAT_1);
-        gpio_set_dir(PIN_BATT_STAT_1, GPIO_IN);
-        gpio_init(PIN_DC_POWER_SAVE);
-        gpio_set_dir(PIN_DC_POWER_SAVE, GPIO_OUT);
-        gpio_put(PIN_DC_POWER_SAVE, true);  // Power saving disabled by default.
-    #endif
+#include "Rumble.h"
+
+void power_gpio_init()
+{
+#ifdef DEVICE_HAS_MARMOTA
+    gpio_init(PIN_BATT_STAT_1);
+    gpio_pull_up(PIN_BATT_STAT_1);
+    gpio_set_dir(PIN_BATT_STAT_1, GPIO_IN);
+    gpio_init(PIN_DC_POWER_SAVE);
+    gpio_set_dir(PIN_DC_POWER_SAVE, GPIO_OUT);
+    gpio_put(PIN_DC_POWER_SAVE, true); // Power saving disabled by default.
+#endif
 }
 
-void power_restart() {
-    watchdog_enable(1, false);  // Reboot after 1 millisecond.
-    sleep_ms(10);  // Stall the exexution to avoid resetting the timer.
+void power_restart()
+{
+    watchdog_enable(1, false); // Reboot after 1 millisecond.
+    sleep_ms(10);              // Stall the exexution to avoid resetting the timer.
 }
 
-void power_bootsel() {
-    #ifdef DEVICE_IS_ALPAKKA
-        if (loop_get_device_mode() == WIRELESS) {
-            warn("POWER: Unable to go into bootsel while wireless\n");
-            return;
-        }
-    #endif
+void power_bootsel()
+{
+#ifdef DEVICE_IS_ALPAKKA
+    if (loop_get_device_mode() == WIRELESS)
+    {
+        warn("POWER: Unable to go into bootsel while wireless\n");
+        return;
+    }
+#endif
     reset_usb_boot(0, 0);
 }
 
-void power_dc_power_save(bool value) {
-    #ifdef DEVICE_HAS_MARMOTA
-        gpio_put(PIN_DC_POWER_SAVE, !value);  // down = power saving ON.
-    #endif
+void power_dc_power_save(bool value)
+{
+#ifdef DEVICE_HAS_MARMOTA
+    gpio_put(PIN_DC_POWER_SAVE, !value); // down = power saving ON.
+#endif
 }
 
-void power_dormant() {
+void power_dormant()
+{
+    RumbleDeinit();
     // Turn off ESP and IMUs.
     power_dc_power_save(true);
     esp_enable(false);
     imu_power_off();
     // Turn off leds.
-    led_board_set(false);  // Core board LED.
-    config_ignore_problems();  // Do not blink LEDs for problems anymore.
-    led_idle_mask(0b0000);  // Frontal 4 LEDs.
+    led_board_set(false);     // Core board LED.
+    config_ignore_problems(); // Do not blink LEDs for problems anymore.
+    led_idle_mask(0b0000);    // Frontal 4 LEDs.
     led_set_mode(LED_MODE_IDLE);
     // Ensure home button is released (after shortcut press).
-    while(!gpio_get(PIN_HOME)) {
+    while (!gpio_get(PIN_HOME))
+    {
         sleep_ms(100);
     }
     // In order to go into dormant mode we need to be running from a stoppable

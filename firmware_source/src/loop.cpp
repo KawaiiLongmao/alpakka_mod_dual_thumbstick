@@ -26,6 +26,7 @@
 #include "webusb.h"
 
 #include "HID/DualSense.h"
+#include "Rumble.h"
 
 // -----------------------------------------------------
 #include "hardware/vreg.h"
@@ -222,6 +223,9 @@ void loop_controller_init()
         set_wireless();
 #endif
     }
+
+    RumbleInit();
+
     loop_run();
 }
 

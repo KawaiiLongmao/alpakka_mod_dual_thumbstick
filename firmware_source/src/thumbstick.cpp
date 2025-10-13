@@ -112,7 +112,7 @@ void thumbstick_calibrate()
     float rx = 0;
     float ry = 0;
     thumbstick_calibrate_each(PIN_THUMBSTICK_LX, PIN_THUMBSTICK_LY, &lx, &ly);
-#if defined DEVICE_ALPAKKA_V1 || DEVICE_ALPAKKA_V0 == 2
+#if defined(DEVICE_ALPAKKA_V1) || DEVICE_ALPAKKA_V0 == 2
     thumbstick_calibrate_each(PIN_THUMBSTICK_RX, PIN_THUMBSTICK_RY, &rx, &ry);
 #endif
     config_set_thumbstick_offset(lx, ly, rx, ry);
@@ -125,7 +125,7 @@ void thumbstick_init()
     adc_init();
     adc_gpio_init(PIN_THUMBSTICK_LX);
     adc_gpio_init(PIN_THUMBSTICK_LY);
-#if defined DEVICE_ALPAKKA_V1 || DEVICE_ALPAKKA_V0 == 2
+#if defined(DEVICE_ALPAKKA_V1) || DEVICE_ALPAKKA_V0 == 2
     adc_gpio_init(PIN_THUMBSTICK_RX);
     adc_gpio_init(PIN_THUMBSTICK_RY);
 #endif
@@ -206,7 +206,11 @@ void thumbstick_from_ctrl(Thumbstick *thumbstick, CtrlProfile *ctrl, uint8_t ind
 #if DEVICE_ALPAKKA_V0 == 2
         index == 0 ? false : false,
 #else
+#if MOD_LINGHU
+        index == 0 ? false : false,
+#else
         index == 0 ? false : true,
+#endif
 #endif
         index == 0 ? false : false,
         (ThumbstickMode)ctrl_thumbtick.mode,

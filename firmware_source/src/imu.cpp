@@ -95,8 +95,8 @@ Vector imu_read_gyro_bits(uint8_t cs)
 #if MOD_LINGHU
     return (Vector){
         -(double)x - offset_x,
-        (double)y - offset_y,
-        -(double)z - offset_z,
+        -(double)y - offset_y,
+        (double)z - offset_z,
     };
 #else
     return (Vector){
@@ -127,8 +127,8 @@ Vector imu_read_accel_bits(uint8_t cs)
 #else /* DEVICE_ALPAKKA_V1 */
 #if MOD_LINGHU
     return (Vector){
-        (double)x - offset_x,
-        -(double)y - offset_y,
+        -(double)x - offset_x,
+        (double)y - offset_y,
         -(double)z - offset_z,
     };
 #else

@@ -113,8 +113,13 @@ Pin numbers from 200 to 215 are IO Expander 2, from pin 0 to pin 15.
 #define PIN_I2C_SCL 23
 #define PIN_HOME 24
 #define PIN_ESP_ENABLE 25
+#if MOD_LINGHU
+#define PIN_THUMBSTICK_RY 27
+#define PIN_THUMBSTICK_RX 26
+#else
 #define PIN_THUMBSTICK_RY 26
 #define PIN_THUMBSTICK_RX 27
+#endif
 #define PIN_THUMBSTICK_LX 29
 #define PIN_THUMBSTICK_LY 28
 // Expanders.
